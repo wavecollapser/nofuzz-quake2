@@ -54,4 +54,7 @@ DEVELOPER INSPIRATION URLS:
 add new vid modes, because q2 doesn't support 1280x1024!
 http://webadvisor.aupr.edu/noc/Othertutorials%5CQuake2EngineTuts%5CGraphical%20Improvements%5CNew%20Video%20Modes.htm
 
+3rd person client code howto here:
+http://webadvisor.aupr.edu/noc/Othertutorials%5CQuake2EngineTuts%5CMisc%5CQ2%20Client%20Side%20Effect%20-%20a%203rd%20person%20camera.htm
+
 http://webadvisor.aupr.edu/noc/Engine%20CodingTutorials.htm might have something useful...
