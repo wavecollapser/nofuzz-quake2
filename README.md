@@ -35,6 +35,8 @@ IRC LOG of features to add:
 
   cl_enforce_cfg 1  , always save all mods config as baseq2/config.cfg 
      and always use baseq2/config.cfg no matter the mod played, if this var is set
+     
+  ((should also be choseable in multiplayer menu and on by default))
 - Remove stufftext ability with cvar
 - Avi file output in 3rd person
 - Masterserver browser like in Quake III arena
