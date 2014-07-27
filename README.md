@@ -48,3 +48,10 @@ There is NO Makefile, if you are a linux/mac user you have to make a Makefile yo
    this might be added later....
    
    (the zquake2.exe can be run perfectly in wine though under linux, so you don't have to compile)
+
+
+DEVELOPER INSPIRATION URLS:
+add new vid modes, because q2 doesn't support 1280x1024!
+http://webadvisor.aupr.edu/noc/Othertutorials%5CQuake2EngineTuts%5CGraphical%20Improvements%5CNew%20Video%20Modes.htm
+
+http://webadvisor.aupr.edu/noc/Engine%20CodingTutorials.htm might have something useful...
