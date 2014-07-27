@@ -37,6 +37,8 @@ IRC LOG of features to add:
      and always use baseq2/config.cfg no matter the mod played, if this var is set
      
   ((should also be choseable in multiplayer menu and on by default))
+  
+  "writeconfig" cmd, like in 3.24 , to enforce writing a config
 - Remove stufftext ability with cvar
 - Avi file output in 3rd person
 - Masterserver browser like in Quake III arena
