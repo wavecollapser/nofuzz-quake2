@@ -28,6 +28,13 @@ IRC LOG of features to add:
     cl_http_ratecap 80 for 80kB/s
 - More oldschool features
 - Fix config.cfg save bug
+   it never saves it, if I run a mod i.e.
+   I think there should be an option
+   to keep saving it to just 1 config.cfg
+   no matter if you got 10000 mods
+
+  cl_enforce_cfg 1  , always save all mods config as baseq2/config.cfg 
+     and always use baseq2/config.cfg no matter the mod played, if this var is set
 - Remove stufftext ability with cvar
 - Avi file output in 3rd person
 - Masterserver browser like in Quake III arena
