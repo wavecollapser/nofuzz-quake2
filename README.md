@@ -46,3 +46,5 @@ IRC LOG of features to add:
 Specific cross platform notes:
 There is NO Makefile, if you are a linux/mac user you have to make a Makefile yourself/use Zoid's
    this might be added later....
+   
+   (the zquake2.exe can be run perfectly in wine though under linux, so you don't have to compile)
