@@ -243,4 +243,15 @@ void GL_UpdateSwapInterval( void )
 #endif
 		}
 	}
+
+	/* miofix: make sure windows broken nvidia drivers that enforce 59fps get 1000+ fps */
+#ifdef _WIN32
+			if ( qwglSwapIntervalEXT )
+			{
+				qwglSwapIntervalEXT( 0 );
+				qwglSwapIntervalEXT( 1 );
+				qwglSwapIntervalEXT( 0 );
+			}
+#endif
+	/* end miofix */
 }
