@@ -5,19 +5,21 @@ Author: Michael Ole Olsen <gnu@gmx.net> and more*
 
 Changes:
 
+- black console background
 - config.cfg write support , was really annoying it didn't save config.cfg
-- stufftext filter
 - critical bugfix for dedicated server which could reveal rcon password
 - no demo sequels at startup
 - no joystick support
-- gl_swapinterval problem fix, tired of 59fps? now you got 1000fps , vsync bug fixed
-
+- vsync bug fixed (gl_swapinterval that would force you to i.e. 59fps, now you got 1000fps!)
+- stufftext filter
 
 For a simpler quake2.exe without any fuzz, just the genuine quake2 feel you always wanted!
 
 No extra stuff, just the newest base quake2 that is stable, all extra stuff removed.
 
 
+To Add:
+http download support, in 3.26
 
 
 
