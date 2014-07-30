@@ -329,15 +329,15 @@ void VID_MenuInit( void )
 		s_fs_box[i].curvalue = vid_fullscreen->value;
 
 		s_defaults_action[i].generic.type = MTYPE_ACTION;
-		s_defaults_action[i].generic.name = "reset to defaults";
+		s_defaults_action[i].generic.name = "apply changes";
 		s_defaults_action[i].generic.x    = 0;
-		s_defaults_action[i].generic.y    = 90;
-		s_defaults_action[i].generic.callback = ResetDefaults;
+		s_defaults_action[i].generic.y    = 100;
+		s_defaults_action[i].generic.callback = ApplyChanges;
 
 		s_cancel_action[i].generic.type = MTYPE_ACTION;
 		s_cancel_action[i].generic.name = "cancel";
 		s_cancel_action[i].generic.x    = 0;
-		s_cancel_action[i].generic.y    = 100;
+		s_cancel_action[i].generic.y    = 110;
 		s_cancel_action[i].generic.callback = CancelChanges;
 	}
 
@@ -366,7 +366,7 @@ void VID_MenuInit( void )
 	s_finish_box.generic.type = MTYPE_SPINCONTROL;
 	s_finish_box.generic.x	= 0;
 	s_finish_box.generic.y	= 80;
-	s_finish_box.generic.name	= "sync every frame";
+	s_finish_box.generic.name	= "vsync enabled";
 	s_finish_box.curvalue = gl_finish->value;
 	s_finish_box.itemnames = yesno_names;
 

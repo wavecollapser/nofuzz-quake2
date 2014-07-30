@@ -246,6 +246,7 @@ void GL_UpdateSwapInterval( void )
 
 	/* miofix: make sure windows broken nvidia drivers that enforce 59fps get 1000+ fps */
 #ifdef _WIN32
+	if (! gl_finish->value)
 			if ( qwglSwapIntervalEXT )
 			{
 				qwglSwapIntervalEXT( 0 );

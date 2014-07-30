@@ -490,6 +490,11 @@ void IN_StartupJoystick (void)
 	MMRESULT	mmr;
 	cvar_t		*cv;
 
+	// no lame joysticks for multiplayer / pro players... disabled them.. enable here if really need them for consile playing i.e.
+	// joystick detection errors fill our console... we dont want that..
+	return;
+
+
  	// assume no joystick
 	joy_avail = false; 
 

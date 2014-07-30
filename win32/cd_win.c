@@ -476,7 +476,7 @@ int CDAudio_Init(void)
 
 	Cmd_AddCommand ("cd", CD_f);
 
-	Com_Printf("CD Audio Initialized\n");
+	//Com_Printf("CD Audio Initialized\n");
 
 	return 0;
 }

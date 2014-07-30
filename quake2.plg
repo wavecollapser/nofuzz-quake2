@@ -6,13 +6,13 @@
 --------------------Configuration: quake2 - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSP4A5.tmp" with contents
+Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSPCE.tmp" with contents
 [
 /nologo /G5 /MT /W4 /GX /Zd /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /Fp".\release/quake2.pch" /YX /Fo".\release/" /Fd".\release/" /FD /c 
-"C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\console.c"
+"C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\win32\cd_win.c"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSP4A5.tmp" 
-Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSP4A6.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSPCE.tmp" 
+Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSPCF.tmp" with contents
 [
 winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib /nologo /subsystem:windows /incremental:no /pdb:".\release/quake2.pdb" /machine:I386 /out:".\release/quake2.exe" 
 ".\release\cd_win.obj"
@@ -68,18 +68,25 @@ winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib /nologo /subsystem:windo
 ".\release\gamex86.lib"
 ".\release\ref_gl.lib"
 ]
-Creating command line "link.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSP4A6.tmp"
+Creating command line "link.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSPCF.tmp"
 <h3>Output Window</h3>
 Compiling...
-console.c
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\console.c(587) : warning C4146: unary minus operator applied to unsigned type, result still unsigned
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\console.c(370) : warning C4706: assignment within conditional expression
+cd_win.c
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\win32\cd_win.c(375) : warning C4100: 'uMsg' : unreferenced formal parameter
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\win32\cd_win.c(375) : warning C4100: 'hWnd' : unreferenced formal parameter
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\win32\cd_win.c(202) : warning C4706: assignment within conditional expression
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\win32\cd_win.c(222) : warning C4706: assignment within conditional expression
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\win32\cd_win.c(449) : warning C4706: assignment within conditional expression
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\win32\cd_win.c(458) : warning C4706: assignment within conditional expression
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\win32\cd_win.c(53) : warning C4706: assignment within conditional expression
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\win32\cd_win.c(62) : warning C4706: assignment within conditional expression
 Linking...
 
 
 
 <h3>Results</h3>
-quake2.exe - 0 error(s), 2 warning(s)
+quake2.exe - 0 error(s), 9 warning(s)
 </pre>
 </body>
 </html>
