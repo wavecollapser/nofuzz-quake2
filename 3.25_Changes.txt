@@ -11,7 +11,12 @@ Changes:
 - no demo sequels at startup
 - no joystick support
 - vsync bug fixed (gl_swapinterval that would force you to i.e. 59fps, now you got 1000fps!)
+  toggle vsync off in video menu to get many fps!!
 - stufftext filter
+- cleanup of console and menus
+  no unneeded items, no errors anymore, just how you want quake2 to be, simple and clean!
+- the perfect quake2 icon! - high res,transparent - to replace the old pixelated one
+
 
 For a simpler quake2.exe without any fuzz, just the genuine quake2 feel you always wanted!
 

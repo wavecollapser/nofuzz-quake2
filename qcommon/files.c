@@ -44,10 +44,11 @@ QUAKE FILESYSTEM
 // in memory
 //
 
-typedef struct
+typedef struct packfile_s
 {
 	char	name[MAX_QPATH];
 	int		filepos, filelen;
+	struct packfile_s *hashNext;
 } packfile_t;
 
 typedef struct pack_s
@@ -55,8 +56,21 @@ typedef struct pack_s
 	char	filename[MAX_OSPATH];
 	FILE	*handle;
 	int		numfiles;
+	packfile_t	**fileHash;
 	packfile_t	*files;
+	unsigned int hashSize;
 } pack_t;
+/*
+typedef struct pack_s
+{
+	unzFile		zFile;
+	FILE		*fp;
+	int			numfiles;
+	packfile_t	*files;
+	packfile_t	**fileHash;
+	unsigned int hashSize;
+	char		filename[1];
+} pack_t;*/
 
 char	fs_gamedir[MAX_OSPATH];
 cvar_t	*fs_basedir;
@@ -639,6 +653,26 @@ void FS_SetGamedir (char *dir)
 
 
 /*
+=============
+FS_ExecAutoexec
+=============
+*/
+void FS_ExecConfig (const char *filename)
+{
+	const char *dir;
+	char name[MAX_QPATH];
+
+	dir = Cvar_VariableString("gamedir");
+	if (*dir)
+		Com_sprintf(name, sizeof(name), "%s/%s/%s", fs_basedir->string, dir, filename); 
+	else
+		Com_sprintf(name, sizeof(name), "%s/%s/%s", fs_basedir->string, BASEDIRNAME, filename); 
+	if (Sys_FindFirst(name, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM))
+		Cbuf_AddText (va("exec %s\n", filename));
+	Sys_FindClose();
+}
+
+/*
 ================
 FS_Link_f
 
@@ -878,3 +912,52 @@ void FS_InitFilesystem (void)
 
 
 
+qboolean FS_ExistsInGameDir (const char *filename)
+{
+	unsigned int		hash;
+	const searchpath_t	*search, *end;
+	char				netpath[MAX_OSPATH];
+	const pack_t		*pak;
+	const packfile_t	*pakfile;
+	FILE				*file;
+
+	if ( fs_searchpaths != fs_base_searchpaths ) {
+		end = fs_base_searchpaths;
+	} else {
+		end = NULL;
+	}
+
+	hash = Com_HashValuePath(filename);
+	for (search = fs_searchpaths; search != end; search = search->next)
+	{
+		// is the element a pak file?
+		if (search->pack)
+		{
+			pak = search->pack;
+			for ( pakfile = pak->fileHash[hash & (pak->hashSize-1)]; pakfile; pakfile = pakfile->hashNext) {
+				if (!Q_stricmp( pakfile->name, filename ) )	{	// found it!
+					return true;
+				}
+			}
+		}
+		else
+		{
+			// check a file in the directory tree
+			Com_sprintf (netpath, sizeof(netpath), "%s/%s", search->filename, filename);
+
+			file = fopen (netpath, "rb");
+#ifndef _WIN32
+			if (!file) {
+				Q_strlwr(netpath);
+				file = fopen (netpath, "rb");
+			}
+#endif
+			if (file) {
+				fclose(file);
+				return true;
+			}
+		}	
+	}
+	
+	return false;
+}

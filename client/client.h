@@ -21,6 +21,24 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 //define	PARANOID			// speed sapping error checking
 
+
+//borrowed from AprQ2, avi export not ready yet!!
+//#define AVI_EXPORT  0
+//#define USE_CURL    1
+
+#ifdef USE_CURL
+
+#define CURL_STATICLIB
+#include "../win32/lib/curl/curl.h"
+#include "../win32/lib/curl/curlver.h"
+#include "../win32/lib/curl/easy.h"
+#include "../win32/lib/curl/mprintf.h"
+#include "../win32/lib/curl/multi.h"
+#include "../win32/lib/curl/stdcheaders.h"
+#include "../win32/lib/curl/types.h"
+#endif
+
+
 #include <math.h>
 #include <string.h>
 #include <stdarg.h>
@@ -83,6 +101,16 @@ extern int num_cl_weaponmodels;
 
 #define	CMD_BACKUP		64	// allow a lot of command backups for very fast systems
 
+#ifdef USE_CURL
+void CL_CancelHTTPDownloads (qboolean permKill);
+void CL_InitHTTPDownloads (void);
+qboolean CL_QueueHTTPDownload (const char *quakePath);
+void CL_RunHTTPDownloads (void);
+qboolean CL_PendingHTTPDownloads (void);
+void CL_SetHTTPServer (const char *URL);
+void CL_HTTP_Cleanup (qboolean fullShutdown);
+
+#endif
 //
 // the client_state_t structure is wiped completely at every
 // server map change
@@ -149,6 +177,7 @@ typedef struct
 	//
 	// server state information
 	//
+	qboolean	sendPacketNow;
 	qboolean	attractloop;		// running the attract loop, any key will menu
 	int			servercount;	// server identification for prespawns
 	char		gamedir[MAX_QPATH];
@@ -198,6 +227,39 @@ typedef enum {
 
 typedef enum {key_game, key_console, key_message, key_menu} keydest_t;
 
+
+
+#ifdef USE_CURL
+typedef enum
+{
+	DLQ_STATE_NOT_STARTED,
+	DLQ_STATE_RUNNING,
+	DLQ_STATE_DONE
+} dlq_state;
+
+typedef struct dlqueue_s
+{
+	struct dlqueue_s	*next;
+	char				quakePath[MAX_QPATH];
+	dlq_state			state;
+} dlqueue_t;
+
+typedef struct dlhandle_s
+{
+	CURL		*curl;
+	char		filePath[MAX_OSPATH];
+	FILE		*file;
+	dlqueue_t	*queueEntry;
+	size_t		fileSize;
+	size_t		position;
+	double		speed;
+	char		URL[576];
+	char		*tempBuffer;
+} dlhandle_t;
+
+#endif
+
+
 typedef struct
 {
 	connstate_t	state;
@@ -231,11 +293,28 @@ typedef struct
 	int			downloadnumber;
 	dltype_t	downloadtype;
 	int			downloadpercent;
+	size_t		downloadposition;
 
 // demo recording info must be here, so it isn't cleared on level change
 	qboolean	demorecording;
 	qboolean	demowaiting;	// don't record until a non-delta message is received
 	FILE		*demofile;
+
+#ifdef USE_CURL
+	dlqueue_t		downloadQueue;			//queue of paths we need
+	
+	dlhandle_t		HTTPHandles[4];			//actual download handles
+	//don't raise this!
+	//i use a hardcoded maximum of 4 simultaneous connections to avoid
+	//overloading the server. i'm all too familiar with assholes who set
+	//their IE or Firefox max connections to 16 and rape my Apache processes
+	//every time they load a page... i'd rather not have my q2 client also
+	//have the ability to do so - especially since we're possibly downloading
+	//large files.
+
+	char			downloadServer[512];	//base url prefix to download from
+	char			downloadReferer[32];	//libcurl requires a static string :(
+#endif
 } client_static_t;
 
 extern client_static_t	cls;
@@ -582,3 +661,8 @@ void x86_TimerStop( void );
 void x86_TimerInit( unsigned long smallest, unsigned longest );
 unsigned long *x86_TimerGetHistogram( void );
 #endif
+
+extern cvar_t	*cl_http_downloads;
+extern cvar_t	*cl_http_filelists;
+extern cvar_t	*cl_http_proxy;
+extern cvar_t	*cl_http_max_connections;

@@ -100,6 +100,8 @@ extern	cvar_t *allow_download_models;
 extern	cvar_t *allow_download_sounds;
 extern	cvar_t *allow_download_maps;
 
+static void OnChange_http_max_connections (cvar_t *self, const char *oldValue);
+
 //======================================================================
 
 
@@ -656,6 +658,17 @@ void CL_Disconnect (void)
 		cls.download = NULL;
 	}
 
+/* miofix */
+#ifdef USE_CURL
+	CL_CancelHTTPDownloads (true);
+	cls.downloadReferer[0] = 0;
+#endif
+
+	cls.downloadname[0] = 0;
+	cls.downloadposition = 0;
+
+	cls.servername[0] = '\0';
+/* end miofix */
 	cls.state = ca_disconnected;
 }
 
@@ -879,9 +892,11 @@ Responses to broadcasts, etc
 */
 void CL_ConnectionlessPacket (void)
 {
+	int i;
 	char	*s;
 	char	*c;
-	
+	netadr_t	remoteAdr;
+
 	MSG_BeginReading (&net_message);
 	MSG_ReadLong (&net_message);	// skip the -1
 
@@ -893,21 +908,55 @@ void CL_ConnectionlessPacket (void)
 
 	Com_Printf ("%s: %s\n", NET_AdrToString (net_from), c);
 
+	NET_StringToAdr (cls.servername, &remoteAdr);
+
 	// server connection
 	if (!strcmp(c, "client_connect"))
 	{
-		if (cls.state == ca_connected)
-		{
-			Com_Printf ("Dup connect received.  Ignored.\n");
+		int		try_to_use_anticheat = 0;
+		char	*p;
+
+		if ( cls.state < ca_connecting ) {
+			Com_Printf( "Connect received while not connecting.  Ignored.\n" );
 			return;
 		}
+		// incompatible types fixme
+		//if ( !NET_CompareBaseAdr( net_from, &remoteAdr ) ) {
+        //    Com_Printf( "Connect from different address.  Ignored.\n" );
+        //    return;
+        //}
+		if ( cls.state > ca_connecting ) {
+			Com_Printf( "Dup connect received.  Ignored.\n" );
+			return;
+		}
+
 		Netchan_Setup (NS_CLIENT, &cls.netchan, net_from, cls.quakePort);
-		MSG_WriteChar (&cls.netchan.message, clc_stringcmd);
-		MSG_WriteString (&cls.netchan.message, "new");	
+
+		for (i = 1; i < Cmd_Argc(); i++)
+		{
+			p = Cmd_Argv(i);
+			if (!strncmp(p, "ac=", 3))  {
+				p += 3;
+				/* reserved for anticheat support */
+			}
+#ifdef USE_CURL
+			else if (!strncmp(p, "dlserver=", 9)) {
+				p += 9;
+				if (strlen(p) > 2) {
+					Com_sprintf (cls.downloadReferer, sizeof(cls.downloadReferer), "quake2://%s", NET_AdrToString(cls.netchan.remote_address));
+					CL_SetHTTPServer(p);
+					if (cls.downloadServer[0])
+						Com_Printf ("HTTP downloading enabled, URL: %s\n", cls.downloadServer);
+				}
+			}
+#endif
+		}
+		MSG_WriteByte (&cls.netchan.message, clc_stringcmd);
+		MSG_WriteString (&cls.netchan.message, "new");
 		cls.state = ca_connected;
+		cl.sendPacketNow = true;
 		return;
 	}
-
 	// server responding to a status broadcast
 	if (!strcmp(c, "info"))
 	{
@@ -1360,6 +1409,11 @@ void CL_RequestNextDownload (void)
 		precache_check = TEXTURE_CNT+999;
 	}
 
+#ifdef USE_CURL
+	if (CL_PendingHTTPDownloads ())
+		return;
+#endif
+
 //ZOID
 	CL_RegisterSounds ();
 	CL_PrepRefresh ();
@@ -1485,6 +1539,14 @@ void CL_InitLocal (void)
 
 	cl_vwep = Cvar_Get ("cl_vwep", "1", CVAR_ARCHIVE);
 
+#ifdef USE_CURL
+	cl_http_proxy = Cvar_Get ("cl_http_proxy", "", 0);
+	cl_http_filelists = Cvar_Get ("cl_http_filelists", "1", 0);
+	cl_http_downloads = Cvar_Get ("cl_http_downloads", "1", 0);
+	cl_http_max_connections = Cvar_Get ("cl_http_max_connections", "2", 0);
+	cl_http_max_connections->OnChange = OnChange_http_max_connections;
+	OnChange_http_max_connections(cl_http_max_connections, cl_http_max_connections->resetString);
+#endif
 
 	//
 	// register our commands
@@ -1842,3 +1904,15 @@ void CL_Shutdown(void)
 }
 
 
+#ifdef USE_CURL
+void OnChange_http_max_connections (cvar_t *self, const char *oldValue)
+{
+	if (self->integer > 4)
+		Cvar_Set (self->name, "4");
+	else if (self->integer < 1)
+		Cvar_Set (self->name, "1");
+
+	if (self->integer > 2)
+		Com_Printf ("WARNING: Changing the maximum connections higher than 2 violates the HTTP specification recommendations. Doing so may result in you being blocked from the remote system and offers no performance benefits unless you are on a very high latency link (ie, satellite)\n");
+}
+#endif

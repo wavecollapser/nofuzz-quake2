@@ -387,9 +387,9 @@ Com_Printf("Refresh failed\n");
 Com_Printf("Trying mode 0\n");
 					Cvar_SetValue("sw_mode", 0);
 					if ( !VID_LoadRefresh( name ) )
-						Com_Error (ERR_FATAL, "Couldn't fall back to software refresh!");
+						Com_Error (ERR_FATAL, "No renderer found\nNeed ref_gl or ref_soft dynamic libs in the dir.");
 				} else
-					Com_Error (ERR_FATAL, "Couldn't fall back to software refresh!");
+					Com_Error (ERR_FATAL, "No renderer found\nNeed ref_gl or ref_soft dynamic libs in the dir.");
 			}
 
 			Cvar_Set( "vid_ref", "soft" );

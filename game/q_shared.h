@@ -322,6 +322,13 @@ typedef struct cvar_s
 	qboolean	modified;	// set each time the cvar is changed
 	float		value;
 	struct cvar_s *next;
+
+
+	//void		(*OnChange) (const char *oldValue);
+	void		(*OnChange) (struct cvar_s *self, const char *oldValue);
+	int			integer;
+	char		*resetString;
+	struct cvar_s *hashNext;
 } cvar_t;
 
 #endif		// CVAR

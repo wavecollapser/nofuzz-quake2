@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../game/q_shared.h"
 
 
-#define	VERSION		3.25
+#define	VERSION		3.26
 
 #define	BASEDIRNAME	"baseq2"
 
@@ -824,3 +824,49 @@ void SV_Frame (int msec);
 
 
 
+typedef enum memtag_e
+{
+	TAG_NOT_TAGGED,
+	TAG_STATIC,
+	TAG_TEMP,
+	TAG_CMD,
+	TAG_ALIAS,
+	TAG_TRIGGER,
+	TAG_MACRO,
+	TAG_CVAR,
+	TAG_FS_LOADFILE,
+	TAG_FS_LOADPAK,
+	TAG_FS_FILELIST,
+	TAG_FS_SEARCHPATH,
+	TAG_CLIENTS,
+	TAG_CL_ENTS,
+
+	TAG_CL_KEYBIND,
+	TAG_CL_SFX,
+	TAG_CL_SOUNDCACHE,
+	TAG_CL_LOADPCX,
+	TAG_CL_CINEMA,
+	TAG_CL_LOC,
+	TAG_CL_IGNORE,
+	TAG_CL_DRAWSTRING,
+	TAG_CL_DOWNLOAD,
+
+	TAG_X86,
+	TAG_CLIPBOARD,
+	TAG_MENU,
+	TAG_MP3LIST,
+	TAG_AVIEXPORT,
+
+	TAG_RENDER_MODEL,
+	TAG_RENDER_IMAGE,
+	TAG_RENDER_IMGRESAMPLE,
+	TAG_RENDER_SCRSHOT,
+
+	TAG_DLL_GAME,
+	TAG_DLL_LEVEL,
+	TAG_MAX_TAGS
+} memtag_t;
+
+
+//miofix aprq2
+qboolean FS_ExistsInGameDir (const char *filename);

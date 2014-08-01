@@ -674,7 +674,7 @@ void VID_CheckChanges (void)
 		if ( !VID_LoadRefresh( name ) )
 		{
 			if ( strcmp (vid_ref->string, "soft") == 0 )
-				Com_Error (ERR_FATAL, "Couldn't fall back to software refresh!");
+				Com_Error (ERR_FATAL, "No renderer found\nNeed ref_gl or ref_soft dynamic libs in the dir.");
 			Cvar_Set( "vid_ref", "soft" );
 
 			/*
