@@ -1882,6 +1882,13 @@ void CL_Init (void)
 	CL_InitLocal ();
 	IN_Init ();
 
+	
+#ifdef USE_CURL
+	CL_InitHTTPDownloads ();
+#endif
+
+
+
 //	Cbuf_AddText ("exec autoexec.cfg\n");
 	FS_ExecAutoexec ();
 	Cbuf_Execute ();
