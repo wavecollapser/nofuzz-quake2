@@ -53,7 +53,7 @@ char *svc_strings[256] =
 qboolean stuff_filter(char *s)
 {
 	int i = 0;
-	char *stuffs[24] = {"+use",
+	char *stuffs[24] = {	"+use",
 							"+mlook",
 							"+klook",
 							"+attack",

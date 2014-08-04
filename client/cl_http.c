@@ -42,11 +42,6 @@ static qboolean	downloading_pak = false;
 static qboolean	httpDown = false;
 
 
-/* extern statics */
-
-//extern void CL_RestartFilesystem( qboolean execAutoexec );
-extern int Q_strnicmp (const char *s1, const char *s2, size_t size);
-
 
 qboolean isvalidchar (int c)
 {
@@ -55,10 +50,6 @@ qboolean isvalidchar (int c)
 	return true;
 }
 
-
-#define Q_isupper( c )	( (c) >= 'A' && (c) <= 'Z' )
-#define Q_islower( c )	( (c) >= 'a' && (c) <= 'z' )
-#define Q_isdigit( c )	( (c) >= '0' && (c) <= '9' )
 
 unsigned int Com_HashValue (const char *name)
 {
@@ -163,25 +154,6 @@ on the HTTP server should ideally be gzipped to conserve
 bandwidth.
 */
 
-void A_strncpyz( char *dest, const char *src, size_t size )
-{
-#ifndef NDEBUG
-	if ( !dest )
-		Com_Error(ERR_FATAL, "A_strncpyz: NULL dest" );
-
-	if ( !src )
-		Com_Error(ERR_FATAL, "A_strncpyz: NULL src" );
-
-	if ( size < 1 )
-		Com_Error(ERR_FATAL, "A_strncpyz: size < 1" ); 
-#endif
-
-	if( size ) {
-		while( --size && (*dest++ = *src++) );
-		*dest = '\0';
-	}
-}
-
 /*
 ===============
 CL_HTTP_Progress
@@ -238,7 +210,7 @@ static size_t CL_HTTP_Header (void *ptr, size_t size, size_t nmemb, void *stream
 	else
 		len = sizeof(headerBuff);
 
-	A_strncpyz (headerBuff, ptr, len);
+	Q_strncpyz (headerBuff, ptr, len);
 
 	if (!Q_strnicmp (headerBuff, "Content-Length: ", 16))
 	{
@@ -353,7 +325,7 @@ int CL_CURL_Debug (CURL *c, curl_infotype type, char *data, size_t size, void * 
 		char	buff[4096];
 		if (size > sizeof(buff))
 			size = sizeof(buff);
-		A_strncpyz (buff, data, size);
+		Q_strncpyz (buff, data, size);
 		Com_Printf ("DEBUG: %s\n", buff);
 	}
 
@@ -628,7 +600,7 @@ qboolean CL_QueueHTTPDownload (const char *quakePath)
 
 	q->next = NULL;
 	q->state = DLQ_STATE_NOT_STARTED;
-	A_strncpyz (q->quakePath, quakePath, sizeof(q->quakePath));
+	Q_strncpyz (q->quakePath, quakePath, sizeof(q->quakePath));
 Com_Printf("[mio] got %s\n\n",q->quakePath);
 	if (needList)
 	{
@@ -685,12 +657,12 @@ Com_Printf("\n\n[mio] =============WE WERE CALLED==================",pendingCoun
 Com_Printf("\n\n[mio] =============WE WERE CALLED==================",pendingCount);
 Com_Printf("\n\n[mio] =============WE WERE AFFE==================",pendingCount);
 
-	strncpy (cls.downloadServer, "http://rlogin.dk/games/files/", sizeof(cls.downloadServer)-1);
+	//strncpy (cls.downloadServer, "http://rlogin.dk/games/files/", sizeof(cls.downloadServer)-1);
 
 	if (!cls.downloadServer[0])
 		return false;
 
-Com_Printf("\n\n[mio] =============WE GOT PAST AFFE==================",pendingCount);
+Com_Printf("\n\n[mio] =============WE GOT PAST AFFE==================\n",pendingCount);
 
 	return pendingCount + handleCount;
 

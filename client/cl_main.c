@@ -1755,15 +1755,7 @@ void CL_Frame (int msec)
 			if (cls.state == ca_connected) {
 				if (packet_delta < 100) {
 					packet_frame = false;
-					Com_Printf("[miofinal] connected... run downl queue!\n");
 #ifdef USE_CURL
-					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
-					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
-					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
-					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
-					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
-					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
-					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
 					CL_RunHTTPDownloads (); //we run full speed when connecting
 #endif
 				}

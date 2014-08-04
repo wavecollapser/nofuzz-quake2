@@ -6,15 +6,15 @@
 --------------------Configuration: quake2 - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSPAF3.tmp" with contents
+Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSPC7D.tmp" with contents
 [
 /nologo /G5 /MT /W4 /GX /Zd /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "USE_CURL" /Fp".\release/quake2.pch" /YX /Fo".\release/" /Fd".\release/" /FD /c 
 "C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSPAF3.tmp" 
-Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSPAF4.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSPC7D.tmp" 
+Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSPC7E.tmp" with contents
 [
-winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib win32/lib/zlib.lib win32/lib/libcurl.lib /nologo /subsystem:windows /incremental:no /pdb:".\release/quake2.pdb" /machine:I386 /out:".\release/quake2.exe" 
+winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib win32/lib/zlib.lib win32/lib/libcurl.lib /nologo /subsystem:windows /incremental:no /pdb:".\release/quake2.pdb" /debug /machine:I386 /out:".\release/quake2.exe" 
 ".\release\cd_win.obj"
 ".\release\cl_cin.obj"
 ".\release\cl_ents.obj"
@@ -69,32 +69,29 @@ winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib win32/lib/zlib.lib win32
 ".\release\gamex86.lib"
 ".\release\ref_gl.lib"
 ]
-Creating command line "link.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSPAF4.tmp"
+Creating command line "link.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSPC7E.tmp"
 <h3>Output Window</h3>
 Compiling...
 cl_http.c
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(97) : warning C4013: 'FS_ExecConfig' undefined; assuming extern returning int
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(193) : warning C4100: 'ulnow' : unreferenced formal parameter
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(193) : warning C4100: 'ultotal' : unreferenced formal parameter
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(349) : warning C4100: 'ptr' : unreferenced formal parameter
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(349) : warning C4100: 'c' : unreferenced formal parameter
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(649) : warning C4090: 'function' : different 'const' qualifiers
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(649) : warning C4024: 'Q_stricmp' : different types for formal and actual parameter 1
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(767) : warning C4013: 'Q_strlwr' undefined; assuming extern returning int
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(180) : warning C4706: assignment within conditional expression
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(697) : warning C4702: unreachable code
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(699) : warning C4702: unreachable code
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(701) : warning C4702: unreachable code
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(703) : warning C4702: unreachable code
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(706) : warning C4702: unreachable code
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(1069) : warning C4701: local variable 'dl' may be used without having been initialized
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(302) : warning C4706: assignment within conditional expression
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(88) : warning C4013: 'FS_ExecConfig' undefined; assuming extern returning int
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(165) : warning C4100: 'ulnow' : unreferenced formal parameter
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(165) : warning C4100: 'ultotal' : unreferenced formal parameter
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(213) : warning C4013: 'Q_strncpyz' undefined; assuming extern returning int
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(215) : warning C4013: 'Q_strnicmp' undefined; assuming extern returning int
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(321) : warning C4100: 'ptr' : unreferenced formal parameter
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(321) : warning C4100: 'c' : unreferenced formal parameter
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(621) : warning C4090: 'function' : different 'const' qualifiers
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(621) : warning C4024: 'Q_stricmp' : different types for formal and actual parameter 1
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(653) : warning C4101: 'q' : unreferenced local variable
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(728) : warning C4013: 'Q_strlwr' undefined; assuming extern returning int
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(1030) : warning C4701: local variable 'dl' may be used without having been initialized
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(274) : warning C4706: assignment within conditional expression
 Linking...
 
 
 
 <h3>Results</h3>
-quake2.exe - 0 error(s), 16 warning(s)
+quake2.exe - 0 error(s), 13 warning(s)
 </pre>
 </body>
 </html>
