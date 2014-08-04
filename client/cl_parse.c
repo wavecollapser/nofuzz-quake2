@@ -106,14 +106,39 @@ Returns true if the file exists, otherwise it attempts
 to start a download from the server.
 ===============
 */
-qboolean	CL_CheckOrDownloadFile (char *filename)
+extern void Q_strncpyz( char *dest, const char *src, size_t size );
+qboolean	CL_CheckOrDownloadFile (const char *filename)
 {
 	FILE *fp;
 	char	name[MAX_OSPATH];
+	static char lastfilename[MAX_OSPATH] = "\0";
+
+
+	Q_strncpyz(name, filename, sizeof(name));
+	COM_FixPath(name);
+	filename = name;
+
+	//r1: don't attempt same file many times
+	if (!strcmp (filename, lastfilename))
+		return true;
+
+	strcpy (lastfilename, filename);
 
 	if (strstr (filename, ".."))
 	{
-		Com_Printf ("Refusing to download a path with ..\n");
+		Com_Printf ("Refusing to download a path with .. (%s)\n", filename);
+		return true;
+	}
+
+	if (strchr (filename, ' '))
+	{
+		Com_Printf ("Refusing to check a path containing spaces (%s)\n", filename);
+		return true;
+	}
+
+	if (strchr (filename, ':'))
+	{
+		Com_Printf ("Refusing to check a path containing a colon (%s)\n", filename);
 		return true;
 	}
 
@@ -121,6 +146,18 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 	{	// it exists, no need to download
 		return true;
 	}
+
+#ifdef USE_CURL
+	if (CL_QueueHTTPDownload (filename))
+	{
+		//we return true so that the precache check keeps feeding us more files.
+		//since we have multiple HTTP connections we want to minimize latency
+		//and be constantly sending requests, not one at a time.
+
+		//fixme mio just queue one at a ttime, we got time enough
+		return true;
+	}
+#endif
 
 	strcpy (cls.downloadname, filename);
 
@@ -138,7 +175,8 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 //	FS_CreatePath (name);
 
 	fp = fopen (name, "r+b");
-	if (fp) { // it exists
+	if (fp)
+	{ // it exists
 		int len;
 		fseek(fp, 0, SEEK_END);
 		len = ftell(fp);
@@ -147,20 +185,31 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 
 		// give the server an offset to start the download
 		Com_Printf ("Resuming %s\n", cls.downloadname);
+
 		MSG_WriteByte (&cls.netchan.message, clc_stringcmd);
-		MSG_WriteString (&cls.netchan.message,
-			va("download %s %i", cls.downloadname, len));
-	} else {
+		
+		if (cls.serverProtocol == PROTOCOL_VERSION)
+			MSG_WriteString (&cls.netchan.message, va("download \"%s\" %i udp-zlib", cls.downloadname, len));
+		else
+			MSG_WriteString (&cls.netchan.message, va("download \"%s\" %i", cls.downloadname, len));
+	}
+	else
+	{
 		Com_Printf ("Downloading %s\n", cls.downloadname);
+
 		MSG_WriteByte (&cls.netchan.message, clc_stringcmd);
-		MSG_WriteString (&cls.netchan.message,
-			va("download %s", cls.downloadname));
+
+		if (cls.serverProtocol == PROTOCOL_VERSION)
+			MSG_WriteString (&cls.netchan.message, va("download \"%s\" 0 udp-zlib", cls.downloadname));
+		else
+			MSG_WriteString (&cls.netchan.message, va("download \"%s\"", cls.downloadname));
 	}
 
-	cls.downloadnumber++;
+	//cls.downloadnumber++;
 
 	return false;
 }
+
 
 /*
 ===============

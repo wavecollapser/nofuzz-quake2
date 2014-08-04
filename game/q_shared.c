@@ -127,6 +127,22 @@ void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 }
 
 
+
+int Q_tolower( int c ) {
+	if( Q_isupper( c ) ) {
+		c += ( 'a' - 'A' );
+	}
+
+	return c;
+}
+
+int Q_toupper( int c ) {
+	if( Q_islower( c ) ) {
+		c -= ( 'a' - 'A' );
+	}
+
+	return c;
+}
 void ProjectPointOnPlane( vec3_t dst, const vec3_t p, const vec3_t normal )
 {
 	float d;
@@ -1037,27 +1053,27 @@ void Swap_Init (void)
 }
 
 
-
 /*
 ============
 va
-
 does a varargs printf into a temp buffer, so I don't need to have
 varargs versions of all text functions.
-FIXME: make this buffer size safe someday
 ============
 */
-char	*va(char *format, ...)
+char	*va(const char *format, ...)
 {
 	va_list		argptr;
-	static char		string[1024];
-	
+	static int  index = 0;
+	static char	string[2][2048];
+
+	index  ^= 1;
 	va_start (argptr, format);
-	vsprintf (string, format,argptr);
+	vsnprintf (string[index], sizeof(string[index]), format, argptr);
 	va_end (argptr);
 
-	return string;	
+	return string[index];
 }
+
 
 
 char	com_token[MAX_TOKEN_CHARS];
@@ -1165,7 +1181,68 @@ void Com_PageInMemory (byte *buffer, int size)
 	for (i=size-1 ; i>0 ; i-=4096)
 		paged_total += buffer[i];
 }
+/*
+============
+COM_FixPath
 
+Change '\\' to '/', removes ./ and leading/ending '/'
+"something/a/../b" -> "something/b"
+============
+*/
+void COM_FixPath (char *path)
+{
+	int	i, j, len = 0, lastLash = -1;
+
+	for (i = 0; path[i]; i++) {
+		switch (path[i]) {
+		case '\\':
+		case '/':
+			if(!len)
+				break;
+
+			if (path[len-1] == '/') //remove multiple /
+				break;
+
+			if(path[len-1] == '.')
+			{
+				if(len == 1 || (len >= 2 && path[len-2] != '.'))
+				{	//remove "./"
+					len--;
+					break;
+				}
+			}
+
+			lastLash = len;
+			path[len++] = '/';
+			break;
+		case '.':
+			if(len >= 2 && path[len-1] == '.')
+			{
+				if(lastLash > 0 && path[lastLash-1] != '.')
+				{	//theres lastlash and its not "../"
+					for (j = lastLash-1; j >= 0; j--)
+					{
+						if(path[j] == '/')
+							break;
+					}
+					lastLash = j;
+					len = lastLash+1;			
+					break;
+				}
+				if(path[len-2] == '.')
+					break;
+			}
+			//fallthrough
+		default:
+			path[len++] = path[i];
+			break;
+		}
+	}
+	path[len] = '\0';
+
+	if (len && path[len-1] == '/')
+		path[len-1] = '\0';
+}
 
 
 /*
@@ -1416,3 +1493,143 @@ void Info_SetValueForKey (char *s, char *key, char *value)
 //====================================================================
 
 
+void Q_strncpyz( char *dest, const char *src, size_t size )
+{
+#ifndef NDEBUG
+	if ( !dest )
+		Com_Error(ERR_FATAL, "Q_strncpyz: NULL dest" );
+
+	if ( !src )
+		Com_Error(ERR_FATAL, "Q_strncpyz: NULL src" );
+
+	if ( size < 1 )
+		Com_Error(ERR_FATAL, "Q_strncpyz: size < 1" ); 
+#endif
+
+	if( size ) {
+		while( --size && (*dest++ = *src++) );
+		*dest = '\0';
+	}
+}
+/*
+==============
+Q_strncatz
+==============
+*/
+void Q_strncatz( char *dest, const char *src, size_t size )
+{
+#ifndef NDEBUG
+	if ( !dest )
+		Com_Error(ERR_FATAL, "Q_strncatz: NULL dest" );
+
+	if ( !src )
+		Com_Error(ERR_FATAL, "Q_strncatz: NULL src" );
+
+	if ( size < 1 )
+		Com_Error(ERR_FATAL, "Q_strncatz: size < 1" ); 
+#endif
+	if(size) {
+		while( --size && *dest++ );
+		if( size ) {
+			dest--;
+			while( --size && (*dest++ = *src++) );
+		}
+		*dest = '\0';
+	}
+}
+
+/*
+==============
+Q_strlwr
+==============
+*/
+char *Q_strlwr( char *s )
+{
+	char *p;
+
+	for( p = s; *s; s++ ) {
+		if(Q_isupper(*s))
+			*s += 'a' - 'A';
+	}
+
+	return p;
+}
+
+char *Q_strupr( char *s )
+{
+	char *p;
+
+	for( p = s; *s; s++ ) {
+		if(Q_islower(*s))
+			*s -= 'a' - 'A';
+	}
+
+	return p;
+}
+
+/*
+==============
+Q_IsNumeric
+==============
+*/
+qboolean Q_IsNumeric (const char *s)
+{
+	qboolean dot;
+
+	if(!s)
+		return false;
+
+	if (*s == '-')
+		s++;
+
+	dot = false;
+	do
+	{
+		if(!Q_isdigit(*s)) {
+			if(*s == '.' && !dot)
+				dot = true;
+			else
+				return false;
+		}
+		s++;
+	} while(*s);
+
+	return true;
+}
+
+
+/*
+============================================================================
+
+					LIBRARY REPLACEMENT FUNCTIONS
+
+============================================================================
+*/
+
+#ifndef Q_strnicmp
+int Q_strnicmp (const char *s1, const char *s2, size_t size)
+{
+	int		c1, c2;
+	
+	do
+	{
+		c1 = *s1++;
+		c2 = *s2++;
+
+		if (!size--)
+			return 0;		// strings are equal until end point
+		
+		if (c1 != c2)
+		{
+			if (c1 >= 'a' && c1 <= 'z')
+				c1 -= ('a' - 'A');
+			if (c2 >= 'a' && c2 <= 'z')
+				c2 -= ('a' - 'A');
+			if (c1 != c2)
+				return c1 < c2 ? -1 : 1;	// strings not equal
+		}
+	} while (c1);
+	
+	return 0;		// strings are equal
+}
+#endif

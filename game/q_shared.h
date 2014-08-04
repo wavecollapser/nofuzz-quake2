@@ -1205,3 +1205,30 @@ typedef struct
 extern int vidref_val;
 // PGM
 // ==================
+
+
+
+// mio macros
+#define HAVE__VSNPRINTF
+#define HAVE__SNPRINTF
+
+#ifdef HAVE__SNPRINTF
+# ifndef snprintf 
+#  define snprintf _snprintf
+# endif
+#endif
+
+#ifdef HAVE__VSNPRINTF
+# ifndef vsnprintf 
+#  define vsnprintf(dest, size, src, list) _vsnprintf(dest, size-1, src, list), dest[size-1] = '\0'
+# endif
+#endif
+
+
+#define Q_isupper( c )	( (c) >= 'A' && (c) <= 'Z' )
+#define Q_islower( c )	( (c) >= 'a' && (c) <= 'z' )
+#define Q_isdigit( c )	( (c) >= '0' && (c) <= '9' )
+#define Q_isalpha( c )	( Q_isupper( c ) || Q_islower( c ) )
+#define Q_isalnum( c )	( Q_isalpha( c ) || Q_isdigit( c ) )
+
+int Q_tolower( int c );

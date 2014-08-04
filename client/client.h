@@ -662,7 +662,9 @@ void x86_TimerInit( unsigned long smallest, unsigned longest );
 unsigned long *x86_TimerGetHistogram( void );
 #endif
 
-extern cvar_t	*cl_http_downloads;
-extern cvar_t	*cl_http_filelists;
-extern cvar_t	*cl_http_proxy;
-extern cvar_t	*cl_http_max_connections;
+#ifdef USE_CURL
+extern	cvar_t	*cl_http_downloads;
+extern	cvar_t	*cl_http_filelists;
+extern	cvar_t	*cl_http_proxy;
+extern	cvar_t	*cl_http_max_connections;
+#endif

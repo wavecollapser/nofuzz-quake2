@@ -911,6 +911,18 @@ void FS_InitFilesystem (void)
 }
 
 
+unsigned int Com_HashValuePath (const char *name)
+{
+	unsigned int c, hash = 0;
+
+	while(*name) {
+		c = Q_tolower(*name++);
+		if( c == '\\' )
+			c = '/';
+		hash = hash * 33 + c;
+	}
+	return hash + (hash >> 5);
+}
 
 qboolean FS_ExistsInGameDir (const char *filename)
 {

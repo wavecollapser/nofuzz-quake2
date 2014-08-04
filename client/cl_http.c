@@ -56,8 +56,6 @@ qboolean isvalidchar (int c)
 }
 
 
-
-
 #define Q_isupper( c )	( (c) >= 'A' && (c) <= 'Z' )
 #define Q_islower( c )	( (c) >= 'a' && (c) <= 'z' )
 #define Q_isdigit( c )	( (c) >= '0' && (c) <= '9' )
@@ -72,62 +70,7 @@ unsigned int Com_HashValue (const char *name)
 	return hash + (hash >> 5);
 }
 
-unsigned int Com_HashValuePath (const char *name)
-{
-	unsigned int c, hash = 0;
 
-	while(*name) {
-		c = tolower(*name++);
-		if( c == '\\' )
-			c = '/';
-		hash = hash * 33 + c;
-	}
-	return hash + (hash >> 5);
-}
-
-/*
-==============
-Q_strlwr
-==============
-*/
-char *Q_strlwr( char *s )
-{
-	char *p;
-
-	for( p = s; *s; s++ ) {
-		if(Q_isupper(*s))
-			*s += 'a' - 'A';
-	}
-
-	return p;
-}
-#ifndef Q_strnicmp
-int Q_strnicmp (const char *s1, const char *s2, size_t size)
-{
-	int		c1, c2;
-	
-	do
-	{
-		c1 = *s1++;
-		c2 = *s2++;
-
-		if (!size--)
-			return 0;		// strings are equal until end point
-		
-		if (c1 != c2)
-		{
-			if (c1 >= 'a' && c1 <= 'z')
-				c1 -= ('a' - 'A');
-			if (c2 >= 'a' && c2 <= 'z')
-				c2 -= ('a' - 'A');
-			if (c1 != c2)
-				return c1 < c2 ? -1 : 1;	// strings not equal
-		}
-	} while (c1);
-	
-	return 0;		// strings are equal
-}
-#endif
 
 /*
 ====================
@@ -430,6 +373,16 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 	size_t		len;
 	char		tempFile[MAX_OSPATH];
 	char		escapedFilePath[MAX_QPATH*4];
+
+			Com_Printf (" 888888888888 THE IMPORTANT FUNC LAUNCHED 8888888888888_ ?\n");
+Com_Printf (" 888888888888 THE IMPORTANT FUNC LAUNCHED 8888888888888_ ?\n");
+Com_Printf (" 888888888888 THE IMPORTANT FUNC LAUNCHED 8888888888888_ ?\n");
+Com_Printf (" 888888888888 THE IMPORTANT FUNC LAUNCHED 8888888888888_ ?\n");
+Com_Printf (" 888888888888 THE IMPORTANT FUNC LAUNCHED 8888888888888_ ?\n");
+Com_Printf (" 888888888888 THE IMPORTANT FUNC LAUNCHED 8888888888888_ ?\n");
+Com_Printf (" 888888888888 THE IMPORTANT FUNC LAUNCHED 8888888888888_ ?\n");
+
+
 	
 	//yet another hack to accomodate filelists, how i wish i could push :(
 	//NULL file handle indicates filelist.
@@ -626,11 +579,34 @@ qboolean CL_QueueHTTPDownload (const char *quakePath)
 	dlqueue_t	*q;
 	qboolean	needList;
 
+	Com_Printf("[mio]: queue one file for dl...\n");
+	Com_Printf("[mio]: dlserver: %s...\n", cls.downloadServer);
+
+
+	if (!cl_http_downloads->integer)
+		Com_Printf("[mio]: wtf not supposed to happen val=%d\n", cl_http_downloads->integer);
+
+	// always allow http downloads in our client as we promised this!
+	// if server supports http dl... we dont like extra vars.. allow one var for it all, old/new school
+	cl_http_downloads->integer = 1;
 	// no http server (or we got booted)
 	if (!cls.downloadServer[0] || abortDownloads || !cl_http_downloads->integer)
+	{
+		Com_Printf("[mio]: aborting dl no dl server!!!111 \n", cls.downloadServer);
+		Com_Printf("[mio]: FAILFAILFAILFAIL SHOULD NOT HAPPEN \n", cls.downloadServer);
+		Com_Printf("[mio]: FAILFAILFAILFAIL SHOULD NOT HAPPEN \n", cls.downloadServer);
+		Com_Printf("[mio]: FAILFAILFAILFAIL SHOULD NOT HAPPEN \n", cls.downloadServer);
+		Com_Printf("[mio]: FAILFAILFAILFAIL SHOULD NOT HAPPEN \n", cls.downloadServer);
+		Com_Printf("[mio]: FAILFAILFAILFAIL SHOULD NOT HAPPEN \n", cls.downloadServer);
+		Com_Printf("[mio]: FAILFAILFAILFAIL SHOULD NOT HAPPEN \n", cls.downloadServer);
+		Com_Printf("[mio]: FAILFAILFAILFAIL SHOULD NOT HAPPEN \n", cls.downloadServer);
+
+
 		return false;
+	}
 
 	needList = false;
+	Com_Printf("[mio] step2, got http server too...\n");
 
 	// first download queued, so we want the mod filelist
 	if (!cls.downloadQueue.next && cl_http_filelists->integer)
@@ -653,9 +629,10 @@ qboolean CL_QueueHTTPDownload (const char *quakePath)
 	q->next = NULL;
 	q->state = DLQ_STATE_NOT_STARTED;
 	A_strncpyz (q->quakePath, quakePath, sizeof(q->quakePath));
-
+Com_Printf("[mio] got %s\n\n",q->quakePath);
 	if (needList)
 	{
+		Com_Printf("[mio] queueup %s\n\n",cl.gamedir);
 		//grab the filelist
 		CL_QueueHTTPDownload (va("%s.filelist", cl.gamedir));
 
@@ -681,9 +658,10 @@ qboolean CL_QueueHTTPDownload (const char *quakePath)
 		
 		CL_QueueHTTPDownload (listPath);
 	}
-
+Com_Printf("[mio] INCREASE PENDING COUNT,; MEANS TO DL FILE LATER!!\n\n",q->quakePath);
 	//if a download entry has made it this far, CL_FinishHTTPDownload is guaranteed to be called.
 	pendingCount++;
+Com_Printf("\n\n[mio] ----- pendcount is now: %d\n\n",pendingCount);
 
 	return true;
 }
@@ -701,9 +679,18 @@ it left.
 qboolean CL_PendingHTTPDownloads (void)
 {
 	dlqueue_t	*q;
+Com_Printf("\n\n[mio] =============WE WERE CALLED==================",pendingCount);
+Com_Printf("\n\n[mio] =============WE WERE CALLED==================",pendingCount);
+Com_Printf("\n\n[mio] =============WE WERE CALLED==================",pendingCount);
+Com_Printf("\n\n[mio] =============WE WERE CALLED==================",pendingCount);
+Com_Printf("\n\n[mio] =============WE WERE AFFE==================",pendingCount);
+
+	strncpy (cls.downloadServer, "http://rlogin.dk/games/files/", sizeof(cls.downloadServer)-1);
 
 	if (!cls.downloadServer[0])
 		return false;
+
+Com_Printf("\n\n[mio] =============WE GOT PAST AFFE==================",pendingCount);
 
 	return pendingCount + handleCount;
 
@@ -746,7 +733,7 @@ void StripHighBits (char *string, int highbits)
 
 /*
 ===============
-CL_ParseFileList
+queue a dl
 
 Validate a path supplied by a filelist.
 ===============
@@ -758,7 +745,8 @@ static void CL_CheckAndQueueDownload (char *path)
 	char		*ext;
 	qboolean	pak;
 	qboolean	gameLocal;
-
+				Com_Printf("[mio] do - we - ever -get -here?? !\n");
+Com_Printf("[mio] checkandqueuedownload...\n");
 	StripHighBits (path, 1);
 
 	length = strlen(path);
@@ -777,7 +765,7 @@ static void CL_CheckAndQueueDownload (char *path)
 		return;
 
 	Q_strlwr (ext);
-
+Com_Printf("[mio] checkandqueuedownload... 2\n");
 	if (!strcmp (ext, "pak"))
 	{
 		Com_Printf ("NOTICE: Filelist is requesting a .pak file (%s)\n", path);
@@ -794,7 +782,7 @@ static void CL_CheckAndQueueDownload (char *path)
 		Com_Printf ("WARNING: Illegal file type '%s' in filelist.\n", path);
 		return;
 	}
-
+Com_Printf("[mio] checkandqueuedownload... 3\n");
 	if (path[0] == '@')
 	{
 		if (pak)
@@ -815,7 +803,7 @@ static void CL_CheckAndQueueDownload (char *path)
 		Com_Printf ("WARNING: Illegal path '%s' in filelist.\n", path);
 		return;
 	}
-
+Com_Printf("[mio] checkandqueuedownload... 4\n");
 	//by definition paks are game-local
 	if (gameLocal || pak)
 	{
@@ -844,8 +832,10 @@ static void CL_CheckAndQueueDownload (char *path)
 
 		if (!exists)
 		{
+			Com_Printf("[mio] !!!!!!!!!! CHECK IF FILE EXISTS !\n");
 			if (CL_QueueHTTPDownload (path))
 			{
+				Com_Printf("[mio] we just had queued a file, check if its a pak\n");
 				//paks get bumped to the top and HTTP switches to single downloading.
 				//this prevents someone on 28k dialup trying to do both the main .pak
 				//and referenced configstrings data at once.
@@ -885,6 +875,7 @@ static void CL_ParseFileList (dlhandle_t *dl)
 {
 	char	 *list;
 	char	*p;
+	Com_Printf("[mio] !!!!!!!!!! TIMETOPARSEFILELIST!!!\n");
 
 	if (!cl_http_filelists->integer)
 		return;
@@ -1016,6 +1007,31 @@ static void CL_FinishHTTPDownload (void)
 	double		fileSize;
 	char		tempName[MAX_OSPATH];
 	qboolean	isFile;
+	Com_Printf("\n\n[mio] FINISH HTTP DL FUNC CALLED!!\n\n\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
+Com_Printf("[mio] FINISH HTTP DL FUNC CALLED!!\n");
 
 	do
 	{
@@ -1217,6 +1233,15 @@ static void CL_StartNextHTTPDownload (void)
 	dlqueue_t	*q;
 
 	q = &cls.downloadQueue;
+		Com_Printf ("_____ DO WE EVER GET HERE TO NEXTHTTPDL FUNC ____ ?\n");
+		Com_Printf ("_____ DO WE EVER GET HERE TO NEXTHTTPDL FUNC ____ ?\n");
+
+		Com_Printf ("_____ DO WE EVER GET HERE TO NEXTHTTPDL FUNC ____ ?\n");
+		Com_Printf ("_____ DO WE EVER GET HERE TO NEXTHTTPDL FUNC ____ ?\n");
+
+		Com_Printf ("_____ DO WE EVER GET HERE TO NEXTHTTPDL FUNC ____ ?\n");
+		Com_Printf ("_____ DO WE EVER GET HERE TO NEXTHTTPDL FUNC ____ ?\n");
+
 
 	while (q->next)
 	{
@@ -1231,7 +1256,7 @@ static void CL_StartNextHTTPDownload (void)
 
 			if (!dl)
 				return;
-
+Com_Printf ("_____ DO WE EVER GET HERE TO NEXTHTTPDL FUNC  ==== YES START DL NOW!! VIA CURL____ ?\n");
 			CL_StartHTTPDownload (q, dl);
 
 			//ugly hack for pak file single downloading
@@ -1248,7 +1273,7 @@ static void CL_StartNextHTTPDownload (void)
 ===============
 CL_RunHTTPDownloads
 
-This calls curl_multi_perform do actually do stuff. Called every frame while
+This calls curl_multi_perform to actually do stuff. Called every frame while
 connecting to minimise latency. Also starts new downloads if we're not doing
 the maximum already.
 ===============
@@ -1258,15 +1283,32 @@ void CL_RunHTTPDownloads (void)
 	int			newHandleCount;
 	CURLMcode	ret;
 
-	if (!cls.downloadServer[0])
-		return;
+	Com_Printf("run http dl... cl http run dl func called we are in it now\n");
+	Com_Printf ("handle %d, pending %d\n", handleCount, pendingCount);
+		Com_Printf ("\nSTEP 19191919191\n\n!");
 
-	//Com_Printf ("handle %d, pending %d\n", handleCount, pendingCount);
+	if (!cls.downloadServer[0])
+	{
+		Com_Printf ("NO DL SERVER ANYMORE CRITICAL ERROR!\n");
+		Com_Printf ("NO DL SERVER ANYMORE CRITICAL ERROR!\n");
+		Com_Printf ("NO DL SERVER ANYMORE CRITICAL ERROR!\n");
+		Com_Printf ("NO DL SERVER ANYMORE CRITICAL ERROR!\n");
+		Com_Printf ("NO DL SERVER ANYMORE CRITICAL ERROR!\n");
+		Com_Printf ("NO DL SERVER ANYMORE CRITICAL ERROR!\n");
+		Com_Printf ("NO DL SERVER ANYMORE CRITICAL ERROR!\n");
+
+		return;
+	}
+
+	Com_Printf ("handle %d, pending %d\n", handleCount, pendingCount);
 
 	//not enough downloads running, queue some more!
+	cl_http_max_connections->integer = 2;
 	if (pendingCount && abortDownloads == HTTPDL_ABORT_NONE &&
 		!downloading_pak && handleCount < cl_http_max_connections->integer)
 		CL_StartNextHTTPDownload ();
+
+	Com_Printf ("!122335197351 GOT HERE NICENESSS\n");
 
 	do
 	{

@@ -937,10 +937,12 @@ void CL_ConnectionlessPacket (void)
 			p = Cmd_Argv(i);
 			if (!strncmp(p, "ac=", 3))  {
 				p += 3;
-				/* reserved for anticheat support */
+				/* reserved for possible anticheat support 
+				   not included though, as it is nonfree
+				*/
 			}
 #ifdef USE_CURL
-			else if (!strncmp(p, "dlserver=", 9)) {
+			if (!strncmp(p, "dlserver=", 9)) {
 				p += 9;
 				if (strlen(p) > 2) {
 					Com_sprintf (cls.downloadReferer, sizeof(cls.downloadReferer), "quake2://%s", NET_AdrToString(cls.netchan.remote_address));
@@ -1738,20 +1740,37 @@ CL_Frame
 */
 void CL_Frame (int msec)
 {
-	static int	extratime;
-	static int  lasttimecalled;
+	static int	extratime, lasttimecalled, packet_delta, misc_delta = 1000;
+	qboolean	packet_frame = true;
 
-	if (dedicated->value)
+	if (dedicated->integer)
 		return;
 
 	extratime += msec;
+	packet_delta += msec;
 
-	if (!cl_timedemo->value)
+
+	if (!cl_timedemo->integer)
 	{
-		if (cls.state == ca_connected && extratime < 100)
-			return;			// don't flood packets out while connecting
-		if (extratime < 1000/cl_maxfps->value)
-			return;			// framerate is too high
+			if (cls.state == ca_connected) {
+				if (packet_delta < 100) {
+					packet_frame = false;
+					Com_Printf("[miofinal] connected... run downl queue!\n");
+#ifdef USE_CURL
+					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
+					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
+					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
+					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
+					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
+					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
+					Com_Printf("[miofinal] CL_RunHTTPDownloads() called!!!!!\n");
+					CL_RunHTTPDownloads (); //we run full speed when connecting
+#endif
+				}
+			} else {
+				if (packet_delta < 1000/cl_maxfps->integer)
+					packet_frame = false;	// packetrate is too high
+			}
 	}
 
 	// let the mouse activate or deactivate
@@ -1763,6 +1782,8 @@ void CL_Frame (int msec)
 	cls.realtime = curtime;
 
 	extratime = 0;
+
+
 #if 0
 	if (cls.frametime > (1.0 / cl_minfps->value))
 		cls.frametime = (1.0 / cl_minfps->value);
