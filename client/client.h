@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef USE_CURL
 
 #define CURL_STATICLIB
+#include "../win32/lib/zlib.h"
 #include "../win32/lib/curl/curl.h"
 #include "../win32/lib/curl/curlver.h"
 #include "../win32/lib/curl/easy.h"

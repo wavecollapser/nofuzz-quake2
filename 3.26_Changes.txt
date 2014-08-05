@@ -26,12 +26,11 @@ For a simpler quake2.exe without any fuzz, just the genuine quake2 feel you alwa
 No extra stuff, just the newest base quake2 that is stable, all extra stuff removed.
 
 
-To Add 3.26:
+To Add 3.27:
 15:31:10] <Raylis> btw, did u add a buffer overflow fix for 3.26?
 [15:31:23] <Raylis> by replacing all vsprintf to vsnprintf with a sizeof()?
 
 
 **
 Extra authors:
-	stufftext filter made by Raylis @ Quakenet
-	aprquake2 http download
+	security tips and stufftext filter by Raylis @ Quakenet

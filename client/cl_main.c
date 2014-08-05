@@ -659,7 +659,7 @@ void CL_Disconnect (void)
 	}
 
 /* miofix */
-#ifdef USE_CURL
+#ifdef USE_HURL
 	CL_CancelHTTPDownloads (true);
 	cls.downloadReferer[0] = 0;
 #endif
@@ -941,7 +941,7 @@ void CL_ConnectionlessPacket (void)
 				   not included though, as it is nonfree
 				*/
 			}
-#ifdef USE_CURL
+#ifdef USE_HURL
 			if (!strncmp(p, "dlserver=", 9)) {
 				p += 9;
 				if (strlen(p) > 2) {
@@ -1411,7 +1411,7 @@ void CL_RequestNextDownload (void)
 		precache_check = TEXTURE_CNT+999;
 	}
 
-#ifdef USE_CURL
+#ifdef USE_HURL
 	if (CL_PendingHTTPDownloads ())
 		return;
 #endif
@@ -1541,7 +1541,7 @@ void CL_InitLocal (void)
 
 	cl_vwep = Cvar_Get ("cl_vwep", "1", CVAR_ARCHIVE);
 
-#ifdef USE_CURL
+#ifdef USE_HURL
 	cl_http_proxy = Cvar_Get ("cl_http_proxy", "", 0);
 	cl_http_filelists = Cvar_Get ("cl_http_filelists", "1", 0);
 	cl_http_downloads = Cvar_Get ("cl_http_downloads", "1", 0);
@@ -1606,6 +1606,15 @@ void CL_InitLocal (void)
 	Cmd_AddCommand ("invdrop", NULL);
 	Cmd_AddCommand ("weapnext", NULL);
 	Cmd_AddCommand ("weapprev", NULL);
+#ifdef USE_CURL
+	unlink("./opentdm/maps/unrdm1.bsp");
+	unlink("./opentdm/players/male/grunt.pcx");
+	unlink("./opentdm/players/male/grunt_i.pcx");
+	unlink("./ospl2/players/male/grunt.pcx");
+	unlink("./ospl2/players/male/grunt_i.pcx");
+	unlink("./baseq2/players/male/grunt.pcx");
+	unlink("./baseq2/players/male/grunt_i.pcx");
+#endif
 }
 
 
@@ -1742,7 +1751,12 @@ void CL_Frame (int msec)
 {
 	static int	extratime, lasttimecalled, packet_delta, misc_delta = 1000;
 	qboolean	packet_frame = true;
+#ifdef USE_CURL
+		int		i;
+		char	*p;
+#endif
 
+	
 	if (dedicated->integer)
 		return;
 
@@ -1755,9 +1769,32 @@ void CL_Frame (int msec)
 			if (cls.state == ca_connected) {
 				if (packet_delta < 100) {
 					packet_frame = false;
-#ifdef USE_CURL
+#ifdef USE_HURL
 					CL_RunHTTPDownloads (); //we run full speed when connecting
+
 #endif
+
+
+
+#ifdef USE_CURL
+		for (i = 1; i < Cmd_Argc(); i++)
+		{
+			p = Cmd_Argv(i);
+			if (!strncmp (p, "dlserver=", 9))
+			{
+				char	*buff;
+				buff = NET_AdrToString(cls.netchan.remote_address);
+				p += 9;
+				Com_sprintf (cls.downloadReferer, sizeof(cls.downloadReferer), "quake2://%s", buff);
+				strcpy(cls.downloadServer,p);
+				if (cls.downloadServer[0])
+					Com_Printf ("HTTP downloading enabled, URL: %s\n", cls.downloadServer);
+
+				break;
+			}
+		}
+#endif
+
 				}
 			} else {
 				if (packet_delta < 1000/cl_maxfps->integer)
@@ -1883,7 +1920,7 @@ void CL_Init (void)
 	IN_Init ();
 
 	
-#ifdef USE_CURL
+#ifdef USE_HURL
 	CL_InitHTTPDownloads ();
 #endif
 
@@ -1924,7 +1961,7 @@ void CL_Shutdown(void)
 }
 
 
-#ifdef USE_CURL
+#ifdef USE_HURL
 void OnChange_http_max_connections (cvar_t *self, const char *oldValue)
 {
 	if (self->integer > 4)
