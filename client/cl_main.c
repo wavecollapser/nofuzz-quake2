@@ -1606,7 +1606,8 @@ void CL_InitLocal (void)
 	Cmd_AddCommand ("invdrop", NULL);
 	Cmd_AddCommand ("weapnext", NULL);
 	Cmd_AddCommand ("weapprev", NULL);
-#ifdef USE_CURL
+#define MIODEBUG 0
+#ifdef MIODEBUG
 	unlink("./opentdm/maps/unrdm1.bsp");
 	unlink("./opentdm/players/male/grunt.pcx");
 	unlink("./opentdm/players/male/grunt_i.pcx");

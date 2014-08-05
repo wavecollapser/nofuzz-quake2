@@ -6,11 +6,92 @@
 --------------------Configuration: quake2 - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1024.tmp" with contents
+[
+/nologo /G5 /MT /W4 /GX /Zd /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "USE_CURL" /Fp".\release/quake2.pch" /YX /Fo".\release/" /Fd".\release/" /FD /c 
+"C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1024.tmp" 
+Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1025.tmp" with contents
+[
+winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib win32/lib/zlib.lib win32/lib/libcurl.lib /nologo /subsystem:windows /incremental:no /pdb:".\release/quake2.pdb" /machine:I386 /out:".\release/quake2.exe" 
+".\release\cd_win.obj"
+".\release\cl_cin.obj"
+".\release\cl_ents.obj"
+".\release\cl_fx.obj"
+".\release\cl_http.obj"
+".\release\cl_input.obj"
+".\release\cl_inv.obj"
+".\release\cl_main.obj"
+".\release\cl_newfx.obj"
+".\release\cl_parse.obj"
+".\release\cl_pred.obj"
+".\release\cl_scrn.obj"
+".\release\cl_tent.obj"
+".\release\cl_view.obj"
+".\release\cmd.obj"
+".\release\cmodel.obj"
+".\release\common.obj"
+".\release\conproc.obj"
+".\release\console.obj"
+".\release\crc.obj"
+".\release\cvar.obj"
+".\release\files.obj"
+".\release\in_win.obj"
+".\release\keys.obj"
+".\release\m_flash.obj"
+".\release\md4.obj"
+".\release\menu.obj"
+".\release\net_chan.obj"
+".\release\net_wins.obj"
+".\release\pmove.obj"
+".\release\q_shared.obj"
+".\release\q_shwin.obj"
+".\release\qmenu.obj"
+".\release\snd_dma.obj"
+".\release\snd_mem.obj"
+".\release\snd_mix.obj"
+".\release\snd_win.obj"
+".\release\sv_ccmds.obj"
+".\release\sv_ents.obj"
+".\release\sv_game.obj"
+".\release\sv_init.obj"
+".\release\sv_main.obj"
+".\release\sv_send.obj"
+".\release\sv_user.obj"
+".\release\sv_world.obj"
+".\release\sys_win.obj"
+".\release\vid_dll.obj"
+".\release\vid_menu.obj"
+".\release\x86.obj"
+".\release\q2.res"
+".\ctf\release\gamex86.lib"
+".\release\gamex86.lib"
+".\release\ref_gl.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1025.tmp"
+<h3>Output Window</h3>
+Compiling...
+cl_main.c
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\qos.h(236) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\qos.h(463) : warning C4201: nonstandard extension used : nameless struct/union
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(211) : warning C4057: 'function' : 'unsigned char *' differs in indirection to slightly different base types from 'char [1400]'
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(548) : warning C4310: cast truncates constant value
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(549) : warning C4310: cast truncates constant value
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(550) : warning C4310: cast truncates constant value
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(551) : warning C4310: cast truncates constant value
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(649) : warning C4057: 'function' : 'const char *' differs in indirection to slightly different base types from 'unsigned char [32]'
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(650) : warning C4057: 'function' : 'const char *' differs in indirection to slightly different base types from 'unsigned char [32]'
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(651) : warning C4057: 'function' : 'const char *' differs in indirection to slightly different base types from 'unsigned char [32]'
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(715) : warning C4310: cast truncates constant value
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(916) : warning C4189: 'try_to_use_anticheat' : local variable is initialized but not referenced
+Linking...
 
 
 
 <h3>Results</h3>
-quake2.exe - 0 error(s), 0 warning(s)
+quake2.exe - 0 error(s), 13 warning(s)
 </pre>
 </body>
 </html>
