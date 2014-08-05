@@ -19,6 +19,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 // cl_main.c  -- client main loop
 
+#define MIODEBUG 1   // for testin HTTP dl, remove files so we can dl them if set
+
 #include "client.h"
 
 cvar_t	*freelook;
@@ -659,13 +661,13 @@ void CL_Disconnect (void)
 	}
 
 /* miofix */
-#ifdef USE_HURL
-	CL_CancelHTTPDownloads (true);
+#ifdef USE_CURL
 	cls.downloadReferer[0] = 0;
 #endif
 
 	cls.downloadname[0] = 0;
 	cls.downloadposition = 0;
+	cls.downloadServer[0]='\0';
 
 	cls.servername[0] = '\0';
 /* end miofix */
@@ -913,7 +915,6 @@ void CL_ConnectionlessPacket (void)
 	// server connection
 	if (!strcmp(c, "client_connect"))
 	{
-		int		try_to_use_anticheat = 0;
 		char	*p;
 
 		if ( cls.state < ca_connecting ) {
@@ -932,27 +933,21 @@ void CL_ConnectionlessPacket (void)
 
 		Netchan_Setup (NS_CLIENT, &cls.netchan, net_from, cls.quakePort);
 
+#ifdef USE_CURL
 		for (i = 1; i < Cmd_Argc(); i++)
 		{
 			p = Cmd_Argv(i);
-			if (!strncmp(p, "ac=", 3))  {
-				p += 3;
-				/* reserved for possible anticheat support 
-				   not included though, as it is nonfree
-				*/
-			}
-#ifdef USE_HURL
-			if (!strncmp(p, "dlserver=", 9)) {
+			if (!strncmp (p, "dlserver=", 9))
+			{
 				p += 9;
-				if (strlen(p) > 2) {
-					Com_sprintf (cls.downloadReferer, sizeof(cls.downloadReferer), "quake2://%s", NET_AdrToString(cls.netchan.remote_address));
-					CL_SetHTTPServer(p);
-					if (cls.downloadServer[0])
-						Com_Printf ("HTTP downloading enabled, URL: %s\n", cls.downloadServer);
-				}
+
+				strcpy(cls.downloadServer,p);
+		
 			}
-#endif
 		}
+#endif
+
+		
 		MSG_WriteByte (&cls.netchan.message, clc_stringcmd);
 		MSG_WriteString (&cls.netchan.message, "new");
 		cls.state = ca_connected;
@@ -1606,8 +1601,8 @@ void CL_InitLocal (void)
 	Cmd_AddCommand ("invdrop", NULL);
 	Cmd_AddCommand ("weapnext", NULL);
 	Cmd_AddCommand ("weapprev", NULL);
-#define MIODEBUG 0
-#ifdef MIODEBUG
+
+#if MIODEBUG==1
 	unlink("./opentdm/maps/unrdm1.bsp");
 	unlink("./opentdm/players/male/grunt.pcx");
 	unlink("./opentdm/players/male/grunt_i.pcx");
@@ -1750,7 +1745,8 @@ CL_Frame
 */
 void CL_Frame (int msec)
 {
-	static int	extratime, lasttimecalled, packet_delta, misc_delta = 1000;
+	static int once;
+	static int	extratime, lasttimecalled, misc_delta = 1000;
 	qboolean	packet_frame = true;
 #ifdef USE_CURL
 		int		i;
@@ -1762,44 +1758,37 @@ void CL_Frame (int msec)
 		return;
 
 	extratime += msec;
-	packet_delta += msec;
 
 
 	if (!cl_timedemo->integer)
 	{
 			if (cls.state == ca_connected) {
-				if (packet_delta < 100) {
-					packet_frame = false;
-#ifdef USE_HURL
-					CL_RunHTTPDownloads (); //we run full speed when connecting
-
-#endif
-
-
+				if (extratime < 100)
+				{
 
 #ifdef USE_CURL
-		for (i = 1; i < Cmd_Argc(); i++)
-		{
-			p = Cmd_Argv(i);
-			if (!strncmp (p, "dlserver=", 9))
-			{
-				char	*buff;
-				buff = NET_AdrToString(cls.netchan.remote_address);
-				p += 9;
-				Com_sprintf (cls.downloadReferer, sizeof(cls.downloadReferer), "quake2://%s", buff);
-				strcpy(cls.downloadServer,p);
-				if (cls.downloadServer[0])
-					Com_Printf ("HTTP downloading enabled, URL: %s\n", cls.downloadServer);
-
-				break;
-			}
-		}
+					for (i = 1; i < Cmd_Argc(); i++)
+					{
+						p = Cmd_Argv(i);
+						if (!strncmp (p, "dlserver=", 9))
+						{
+							p += 9;
+							strcpy(cls.downloadServer,p);
+							if (1) { //miofixme
+								if (cls.downloadServer[0])
+								Com_Printf ("HTTP downloading enabled, URL: %s\n", cls.downloadServer);
+								once=1;
+							}
+							
+						}
+					}
+#else
+				;
 #endif
-
 				}
 			} else {
-				if (packet_delta < 1000/cl_maxfps->integer)
-					packet_frame = false;	// packetrate is too high
+				if (extratime < 1000/cl_maxfps->integer)
+					;	// packetrate is too high
 			}
 	}
 

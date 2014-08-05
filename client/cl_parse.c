@@ -111,6 +111,7 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 {
 	FILE *fp;
 	char	name[MAX_OSPATH];
+	char tmp[512], *tp=tmp;
 
 	if (strstr (filename, ".."))
 	{
@@ -126,7 +127,14 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 #ifdef USE_CURL
 	// if we fetched the file and renamed successfully dont try to dl again!
 	if (curlFetch(filename) == 0)
-		return
+		return true;
+
+	//above is only we need, r1q2 and aprq2 also only fetches moddir/players/male/... i.e.
+	// not just players/male/...
+	// the http server must be set up with a moddir/players/...
+
+	//if (curlFetch(filename) == 0)
+		//return true;
 #endif
 
 	strcpy (cls.downloadname, filename);
@@ -792,7 +800,7 @@ void CL_ParseServerMessage (void)
 			{
 				// we don't care about maxfps stufftext warnings..
 				// but ignore the maxfps enforcements still.. just don't print them
-				if (!strstr(s,"maxfps"))
+				if (!strstr(s,"maxfps") && !strstr(s,"rate"))
 					Com_Printf("Malicious Stuff: %s\n", s);
 				break;
 			}

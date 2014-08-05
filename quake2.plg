@@ -6,13 +6,13 @@
 --------------------Configuration: quake2 - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1024.tmp" with contents
+Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSP11C4.tmp" with contents
 [
 /nologo /G5 /MT /W4 /GX /Zd /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "USE_CURL" /Fp".\release/quake2.pch" /YX /Fo".\release/" /Fd".\release/" /FD /c 
-"C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c"
+"C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1024.tmp" 
-Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1025.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSP11C4.tmp" 
+Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSP11C5.tmp" with contents
 [
 winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib win32/lib/zlib.lib win32/lib/libcurl.lib /nologo /subsystem:windows /incremental:no /pdb:".\release/quake2.pdb" /machine:I386 /out:".\release/quake2.exe" 
 ".\release\cd_win.obj"
@@ -69,29 +69,24 @@ winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib win32/lib/zlib.lib win32
 ".\release\gamex86.lib"
 ".\release\ref_gl.lib"
 ]
-Creating command line "link.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1025.tmp"
+Creating command line "link.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSP11C5.tmp"
 <h3>Output Window</h3>
 Compiling...
-cl_main.c
+cl_http.c
 C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\rpcasync.h(45) : warning C4115: '_RPC_ASYNC_STATE' : named type definition in parentheses
 C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\qos.h(236) : warning C4201: nonstandard extension used : nameless struct/union
 C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\qos.h(463) : warning C4201: nonstandard extension used : nameless struct/union
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(211) : warning C4057: 'function' : 'unsigned char *' differs in indirection to slightly different base types from 'char [1400]'
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(548) : warning C4310: cast truncates constant value
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(549) : warning C4310: cast truncates constant value
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(550) : warning C4310: cast truncates constant value
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(551) : warning C4310: cast truncates constant value
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(649) : warning C4057: 'function' : 'const char *' differs in indirection to slightly different base types from 'unsigned char [32]'
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(650) : warning C4057: 'function' : 'const char *' differs in indirection to slightly different base types from 'unsigned char [32]'
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(651) : warning C4057: 'function' : 'const char *' differs in indirection to slightly different base types from 'unsigned char [32]'
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(715) : warning C4310: cast truncates constant value
-C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_main.c(916) : warning C4189: 'try_to_use_anticheat' : local variable is initialized but not referenced
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(158) : warning C4101: 'p' : unreferenced local variable
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(155) : warning C4101: 'out' : unreferenced local variable
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(245) : warning C4013: 'FS_ExecConfig' undefined; assuming extern returning int
+C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(297) : warning C4505: 'CL_EscapeHTTPPath' : unreferenced local function has been removed
+        C:\Documents and Settings\mio\Desktop\Quake II v.3.21 src\nofuzz-quake2\client\cl_http.c(111) : see declaration of 'CL_EscapeHTTPPath'
 Linking...
 
 
 
 <h3>Results</h3>
-quake2.exe - 0 error(s), 13 warning(s)
+quake2.exe - 0 error(s), 7 warning(s)
 </pre>
 </body>
 </html>

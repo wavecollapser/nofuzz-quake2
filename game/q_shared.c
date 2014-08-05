@@ -1633,3 +1633,16 @@ int Q_strnicmp (const char *s1, const char *s2, size_t size)
 	return 0;		// strings are equal
 }
 #endif
+/* we really hate newlines in our data */
+char *strip_newlines(char *s)
+{
+	char *tmp;
+
+	tmp = strchr(s,'\n');
+
+	if (tmp) *tmp='\0';
+	else
+		tmp=s;
+
+	return tmp;
+}
