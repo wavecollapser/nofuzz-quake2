@@ -21,9 +21,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 
-
 #ifdef USE_CURL
 #include "client.h"
+
+extern void CL_SendCommand (void);
 
 cvar_t	*cl_http_downloads;
 cvar_t	*cl_http_filelists;
@@ -79,7 +80,7 @@ int binaryWrite(char *file, char *data, int bytenum)
 	sprintf(tmpfile,"%s/%s.tmp2",FS_Gamedir(),file);
 	sprintf(tmpfile2,"%s/%s",FS_Gamedir(),file);
 
-	Com_Printf("try to write %d bytes to %s..\n", bytenum, tmpfile);
+	//Com_Printf("try to write %d bytes to %s..\n", bytenum, tmpfile);
 
 	fh = fopen(tmpfile,"wb");
 	if (!fh) return 1;
@@ -89,9 +90,9 @@ int binaryWrite(char *file, char *data, int bytenum)
 	fclose(fh);
 
 	//CL_RestartFilesystem( false );
-	Com_Printf("fetched 100% ok, rename time...\n");
+	//Com_Printf("fetched 100 ok, rename time...\n");
 
-	Com_Printf("rename %s to %s ..\n", tmpfile,tmpfile2);
+	//Com_Printf("rename %s to %s ..\n", tmpfile,tmpfile2);
 	if (rename(tmpfile,tmpfile2) == 0)
 		remove(tmpfile);
 
@@ -102,52 +103,12 @@ int binaryWrite(char *file, char *data, int bytenum)
 /*
 ===============
 CL_EscapeHTTPPath
-
-Properly escapes a path with HTTP %encoding. libcurl's function
-seems to treat '/' and such as illegal chars and encodes almost
-the entire URL...
-===============
+=============
 */
-static void CL_EscapeHTTPPath (const char *filePath, char *escaped)
-{
-	size_t	i, len;
-	char	*p;
+//static void CL_EscapeHTTPPath (const char *filePath, char *escaped)
 
-	p = escaped;
 
-	len = strlen (filePath);
-	for (i = 0; i < len; i++)
-	{
-		if (!isalnum (filePath[i]) && filePath[i] != ';' && filePath[i] != '/' &&
-			filePath[i] != '?' && filePath[i] != ':' && filePath[i] != '@' && filePath[i] != '&' &&
-			filePath[i] != '=' && filePath[i] != '+' && filePath[i] != '$' && filePath[i] != ',' &&
-			filePath[i] != '[' && filePath[i] != ']' && filePath[i] != '-' && filePath[i] != '_' &&
-			filePath[i] != '.' && filePath[i] != '!' && filePath[i] != '~' && filePath[i] != '*' &&
-			filePath[i] != '\'' && filePath[i] != '(' && filePath[i] != ')')
-		{
-			sprintf (p, "%%%02x", filePath[i]);
-			p += 3;
-		}
-		else
-		{
-			*p = filePath[i];
-			p++;
-		}
-	}
-	p[0] = 0;
-
-	//using ./ in a url is legal, but all browsers condense the path and some IDS / request
-	//filtering systems act a bit funky if http requests come in with uncondensed paths.
-	len = strlen(escaped);
-	p = escaped;
-	while ((p = strstr (p, "./")))
-	{
-		memmove (p, p+2, len - (p - escaped) - 1);
-		len -= 2;
-	}
-}
-
-int curlFetch(char url[])
+int oldcurlFetch(char url[])
 {
   CURL *curl_handle;
   CURLcode res;
@@ -165,18 +126,15 @@ int curlFetch(char url[])
 
   curl_handle = curl_easy_init();
 
-  // sanity check, dont download if there is no server to dl from
-  if (cls.downloadServer == NULL)
+  if (cls.downloadServer == NULL || url == NULL)
 	return 0;
-
-  //strcpy(&buf,"http://rlogin.dk/games/filds/");
 
   sprintf(buf,"%s/%s/%s", cls.downloadServer, FS_Gamedir(), url);
 
-  Com_Printf("HTTP downloading %s ...\n   ",buf);
+  //for debug mio full webpath
+  //Com_Printf("HTTP downloading %s ...\n   ",buf);
+  Com_Printf("HTTP downloading %s ...\n   ",url);
 
-//CL_EscapeHTTPPath (const char *filePath, char *escaped);
-  //CL_EscapeHTTPPath(buf,out);
 
   curl_easy_setopt(curl_handle, CURLOPT_URL, buf);
   curl_easy_setopt(curl_handle, CURLOPT_FAILONERROR);
@@ -193,7 +151,7 @@ int curlFetch(char url[])
   else {
     /* got a file */
 	//Com_Printf("  %s has been downloaded.\n", localfile);
-    Com_Printf("%lu bytes retrieved\n", (long)chunk.size);
+    Com_Printf("%lu bytes received\n", (long)chunk.size);
 
 	//sprintf(&buf,"%s/%s",FS_Gamedir(),localfile);
 	//Com_Printf("buf is now::::: %s\n\n",buf);
@@ -220,77 +178,234 @@ int curlFetch(char url[])
 }
 
 
-/*
-====================
-CL_RestartFilesystem
- 
-Flush caches and restart the VFS.
-====================
-*/
-void VID_Restart_f (void);
-//extern int silentSubsystem;
-qboolean CL_IsDisconnected(void)
+
+
+
+
+struct urls
 {
-	return (cls.state <= ca_disconnected);
+	char *url;
+	int id;
+	char *next;
+	int bytes;
+};
+
+
+
+static const char *turls[] = {
+  "http://rlogin.dk/foobaz",
+  "http://rlogin.dk/roflmao",
+  "http://www.google.com",
+  "http://www.yahoo.com",
+  "http://www.ibm.com",
+  "http://www.mysql.com",
+  "http://www.oracle.com",
+  "http://www.ripe.net",
+  "http://www.iana.org",
+  "http://www.nbc.com",
+  "http://slashdot.org",
+  "http://www.bloglines.com",
+  "http://www.techweb.com",
+  "http://www.newslink.org",
+  "http://www.un.org",
+};
+
+/* max 2 conns to http at a time, don't rape apache servers */
+#define MAX 2
+#define CNT sizeof(turls)/sizeof(char*)
+
+static size_t cb(char *d, size_t n, size_t l, void *p)
+{
+  /* take care of the data here, ignored in this example */
+  (void)d;
+  (void)p;
+  return n*l;
 }
 
-void CL_RestartFilesystem( qboolean execAutoexec )
+
+/* http options */
+#define MAXFILES 100
+#define URLMAXLEN 250
+
+
+struct urls *dlqueue_add(char url[])
 {
-    connstate_t	cls_state;
+  // remember our queueptr
+  static struct urls *p;
+  static int queuenum;
+  int i;
+  static struct urls *tmp;
 
-    if ( cls.state == ca_uninitialized ) {
-        //FS_Restart();
-		//miofixme
-		if (execAutoexec) {
-			FS_ExecConfig("autoexec.cfg");
-			Cbuf_Execute();
-		}
-        return;
-    }
+  Com_Printf("call again... ptr should be const: %p\n",p);
 
-    Com_DPrintf( "CL_RestartFilesystem()\n" );
+  // first time allocate for all files, 100 url structs
+  if (!p) 
+  {
+	  p = malloc(MAXFILES*(sizeof(struct urls)));
+	  if (!p) {
+		  Com_Printf("MALLOC FAIL for http downloads!\n");
+	      return NULL;
+	  }
 
-    /* temporary switch to loading state */
-    cls_state = cls.state;
-    if ( cls.state == ca_active ) {
-//        cls.state = ca_loading;
-    }
+	  tmp=p;
+	  for (i=0;i<MAXFILES;++i)
+	  {
+		  p->url = malloc(URLMAXLEN);
+		  if (!p->url) {
+			  Com_Printf("err p url malloc fail\n");
+			  return NULL;
+		  }
+			
+		  p++;
+	  }
+	  p=tmp;
+	  cls.dlqueue=p;
+  }
+  // time to add to dlqueue
+  
+  strncpy(p->url,url,URLMAXLEN-1);
+  p->next=0xDEADBEEF;
+  p->id=queuenum;
+  p++;
 
-	S_Shutdown();
-	VID_Shutdown();
+  
+  Com_Printf("queued url: %s\n",url);
 
-    //FS_Restart();
-	//miofixme
+  queuenum++;
 
-	if (execAutoexec) {
-		//silentSubsystem = CVAR_SYSTEM_VIDEO|CVAR_SYSTEM_SOUND;
-		FS_ExecConfig("autoexec.cfg");
-		Cbuf_Execute();
-		//silentSubsystem = 0;
-	}
+  return p;
+}
 
-#ifndef VID_INITFIRST
-	S_Init();	
-	VID_Restart_f();
-	VID_CheckChanges();
+static struct urls *url;
+
+static void init(CURLM *cm, int i)
+{
+  CURL *eh = curl_easy_init();
+
+  char buf[1024];
+  snprintf(buf,sizeof(buf)-1,"%s/%s/%s", cls.downloadServer, FS_Gamedir(), cls.dlqueue[i].url);
+
+  //for debug mio full webpath
+  //Com_Printf("HTTP downloading %s ...\n   ",buf);
+
+  Com_Printf("--- MULTI HTTP downloading\n");
+
+  curl_easy_setopt(eh, CURLOPT_WRITEFUNCTION, cb);
+  curl_easy_setopt(eh, CURLOPT_HEADER, 0L);
+  curl_easy_setopt(eh, CURLOPT_URL, buf);
+  curl_easy_setopt(eh, CURLOPT_PRIVATE, buf);
+  curl_easy_setopt(eh, CURLOPT_VERBOSE, 0L);
+  curl_easy_setopt(eh, CURLOPT_USERAGENT, "quake2 curl 3.26");
+
+  Com_Printf("HTTP DL added %s to dlqueue...\n" , buf);
+  curl_multi_add_handle(cm, eh);
+}
+
+int curlFetch(struct url *ptr, int dlnum)
+{
+
+  CURLM *cm;
+  CURLMsg *msg;
+  long L=100;
+  unsigned int C=0;
+  int M, Q, U = -2; // originally -1, mio, but reserved, use a unique FD, 515176 seems to work on windows
+  fd_set R, W, E;
+  struct timeval T;
+
+  // sanity check, dont dl if dlserver supplied is weird..
+  if (!cls.downloadServer)
+	  return 0;
+
+  Com_Printf("INIT newcurl dl now\n");
+  curl_global_init(CURL_GLOBAL_ALL);
+
+  cm = curl_multi_init();
+
+  /* we can optionally limit the total amount of connections this multi handle
+     uses */
+  curl_easy_setopt(cm, CURLMOPT_MAXCONNECTS, (long)MAX);
+
+  Com_Printf("TIME TO INIT YESSSS!!!\n\n");
+
+  // init multiqueue with all urls
+  for (C = 0; C < dlnum; ++C) {
+    init(cm, C);
+  }
+
+  //init(cm, C, url);
+
+  Com_Printf("[mio] MultiCurl() while loop loaded\n");
+  while (U) {
+    curl_multi_perform(cm, &U);
+
+    if (U) {
+      FD_ZERO(&R);
+      FD_ZERO(&W);
+      FD_ZERO(&E);
+
+      if (curl_multi_fdset(cm, &R, &W, &E, &M)) {
+        Com_Printf("E: curl_multi_fdset\n");
+        return 1;
+      }
+/*      if (L == -1)
+        L = 100;
+
+      if (M == -1) {
+#ifdef WIN32
+        Sleep(L);
 #else
-	VID_Restart_f();
-	VID_CheckChanges();
-	S_Init();
+        sleep(L / 1000);
 #endif
+      } else {*/
+        //T.tv_sec = L/1000;
+        //T.tv_usec = (L%1000)*1000;
+		T.tv_sec = 5;
+        T.tv_usec = 0;
 
-    if ( cls_state == ca_disconnected ) {
-        //UI_OpenMenu( UIMENU_MAIN );
-    } else if ( cls_state > ca_connected ) {
-		memset(cl.sound_precache, 0, sizeof(cl.sound_precache));
-		CL_RegisterSounds();
-        CL_PrepRefresh();
+
+        if (0 > select(M+1, &R, &W, &E, &T)) {
+          Com_Printf("E: select(%i,,,,%li): %i: %s\n",
+              M+1, L, errno, strerror(errno));
+          return 1;
+        }
+      
     }
 
-    /* switch back to original state */
-    cls.state = cls_state;
-}
+    while ((msg = curl_multi_info_read(cm, &Q))) {
+      if (msg->msg == CURLMSG_DONE) {
+        char *url;
+        CURL *e = msg->easy_handle;
+        curl_easy_getinfo(msg->easy_handle, CURLINFO_PRIVATE, &url);
+        Com_Printf("R: %d - %s <%s>\n",
+                msg->data.result, curl_easy_strerror(msg->data.result), url);
+        curl_multi_remove_handle(cm, e);
+        curl_easy_cleanup(e);
+      }
+      else {
+        fprintf(stderr, "E: CURLMsg (%d)\n", msg->msg);
+      }
 
+	  // allow user to use console
+	  //CL_SendCommand ();
+
+	  /* not used as we only fetch one file at a time.. 
+	  else we need to make a dlqueue... if we want 2 at a time..
+	  */
+      if (C < CNT) {
+        init(cm, C++);
+        U++; 
+      }
+	  /* just to prevent it from remaining at 0 if there are more
+                URLs to get */
+    }
+  }
+
+  curl_multi_cleanup(cm);
+  curl_global_cleanup();
+
+  // return 0 for success, or 1 for 404 - to keep calling us!
+  return 0;
+}
 
 
 #endif

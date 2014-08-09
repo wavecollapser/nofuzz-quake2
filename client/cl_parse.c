@@ -126,12 +126,27 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 
 #ifdef USE_CURL
 	// if we fetched the file and renamed successfully dont try to dl again!
-	if (curlFetch(filename) == 0)
-		return true;
+	FS_CreatePath (filename);
+
+	// just queue for now
+	dlqueue_add(filename);
+	cls.dlqueue_files += 1; //1 more file added to queue to dl later
+
+	//cls.downloadnow=true;
+	// if we have received all files and put in queue,
+	// multi download them at once now
+	if (1)
+		if (curlFetch(cls.dlqueue,cls.dlqueue_files) == 0)
+			return true;
+
+	//if (curlFetch(filename) == 0)
+	//	return true;
 
 	//above is only we need, r1q2 and aprq2 also only fetches moddir/players/male/... i.e.
 	// not just players/male/...
 	// the http server must be set up with a moddir/players/...
+
+	
 
 	//if (curlFetch(filename) == 0)
 		//return true;

@@ -587,6 +587,7 @@ void CL_Rcon_f (void)
 }
 
 
+
 /*
 =====================
 CL_ClearState
@@ -660,7 +661,7 @@ void CL_Disconnect (void)
 		cls.download = NULL;
 	}
 
-/* miofix */
+/* miofix
 #ifdef USE_CURL
 	cls.downloadReferer[0] = 0;
 #endif
@@ -670,7 +671,7 @@ void CL_Disconnect (void)
 	cls.downloadServer[0]='\0';
 
 	cls.servername[0] = '\0';
-/* end miofix */
+end miofix */
 	cls.state = ca_disconnected;
 }
 
@@ -1406,9 +1407,11 @@ void CL_RequestNextDownload (void)
 		precache_check = TEXTURE_CNT+999;
 	}
 
-#ifdef USE_HURL
-	if (CL_PendingHTTPDownloads ())
-		return;
+#ifdef USE_CURL
+	/* end of http download filelist, dont download anymore 
+	optionally add a filelist to be downloaded: modname.filelist
+	*/
+	Com_Printf("\n");
 #endif
 
 //ZOID
@@ -1752,7 +1755,6 @@ void CL_Frame (int msec)
 		int		i;
 		char	*p;
 #endif
-
 	
 	if (dedicated->integer)
 		return;
@@ -1763,9 +1765,17 @@ void CL_Frame (int msec)
 	if (!cl_timedemo->integer)
 	{
 			if (cls.state == ca_connected) {
+				if (extratime > 400)
+				{
+					//start HTTP dl now
+	cls.downloadnow=true;
+
+				}
 				if (extratime < 100)
 				{
-
+cls.dlqueue_files=0; //no files to dl yet
+					//dont download yet, just queue it..
+					cls.downloadnow=false;
 #ifdef USE_CURL
 					for (i = 1; i < Cmd_Argc(); i++)
 					{

@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CURL_STATICLIB
 #include "../win32/lib/zlib.h"
 #include "../win32/lib/curl/curl.h"
+#include "../win32/lib/curl/multi.h"
 #include "../win32/lib/curl/curlver.h"
 #include "../win32/lib/curl/easy.h"
 #include "../win32/lib/curl/mprintf.h"
@@ -302,7 +303,8 @@ typedef struct
 	FILE		*demofile;
 
 #ifdef USE_CURL
-	dlqueue_t		downloadQueue;			//queue of paths we need
+	struct urls *dlqueue;
+	int dlqueue_files;  //number of files in queue
 	
 	dlhandle_t		HTTPHandles[4];			//actual download handles
 	//don't raise this!
@@ -315,6 +317,7 @@ typedef struct
 
 	char			downloadServer[512];	//base url prefix to download from
 	char			downloadReferer[32];	//libcurl requires a static string :(
+	qboolean downloadnow;
 #endif
 } client_static_t;
 
