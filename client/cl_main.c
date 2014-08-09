@@ -523,6 +523,9 @@ void CL_Connect_f (void)
 	cls.state = ca_connecting;
 	strncpy (cls.servername, server, sizeof(cls.servername)-1);
 	cls.connect_time = -99999;	// CL_CheckForResend() will fire immediately
+
+	// show http dl msg only once..
+	cls.httpdownloadmsg=0;
 }
 
 
@@ -672,6 +675,8 @@ void CL_Disconnect (void)
 
 	cls.servername[0] = '\0';
 end miofix */
+	// show downlaod msg again when connecting from new
+	cls.httpdownloadmsg=0;
 	cls.state = ca_disconnected;
 }
 
@@ -1033,6 +1038,7 @@ CL_ReadPackets
 */
 void CL_ReadPackets (void)
 {
+connresetfix:
 	while (NET_GetPacket (NS_CLIENT, &net_from, &net_message))
 	{
 //	Com_Printf ("packet\n");
@@ -1784,12 +1790,11 @@ cls.dlqueue_files=0; //no files to dl yet
 						{
 							p += 9;
 							strcpy(cls.downloadServer,p);
-							if (1) { //miofixme
+							if (!cls.httpdownloadmsg) { //miofixme
 								if (cls.downloadServer[0])
 								Com_Printf ("HTTP downloading enabled, URL: %s\n", cls.downloadServer);
-								once=1;
+								cls.httpdownloadmsg=1;
 							}
-							
 						}
 					}
 #else

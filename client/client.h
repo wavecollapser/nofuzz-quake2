@@ -303,6 +303,7 @@ typedef struct
 	FILE		*demofile;
 
 #ifdef USE_CURL
+	qboolean httpdownloadmsg;
 	struct urls *dlqueue;
 	int dlqueue_files;  //number of files in queue
 	
