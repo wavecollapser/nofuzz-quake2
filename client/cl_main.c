@@ -19,8 +19,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 // cl_main.c  -- client main loop
 
-#define MIODEBUG 1   // for testin HTTP dl, remove files so we can dl them if set
-
 #include "client.h"
 
 cvar_t	*freelook;
@@ -1473,6 +1471,7 @@ CL_InitLocal
 */
 void CL_InitLocal (void)
 {
+	cvar_t *miodebug;
 	cls.state = ca_disconnected;
 	cls.realtime = Sys_Milliseconds ();
 
@@ -1610,18 +1609,26 @@ void CL_InitLocal (void)
 	Cmd_AddCommand ("weapnext", NULL);
 	Cmd_AddCommand ("weapprev", NULL);
 
-#if MIODEBUG==1
-	unlink("./tdm/players/male/grunt.pcx");
-	unlink("./tdm/players/male/grunt_i.pcx");
-	unlink("./opentdm/maps/unrdm1.bsp");
-	unlink("./opentdm/players/male/grunt.pcx");
-	unlink("./opentdm/players/male/grunt_i.pcx");
-	unlink("./ospl2/maps/unrdm1.bsp");
-	unlink("./ospl2/players/male/grunt.pcx");
-	unlink("./ospl2/players/male/grunt_i.pcx");
-	unlink("./baseq2/players/male/grunt.pcx");
-	unlink("./baseq2/players/male/grunt_i.pcx");
-#endif
+
+	/* mio: only for debugging, use +set miodebug 1 to debug exe
+	it removes files so we can http download them and test http dl!
+	*/
+	miodebug = Cvar_Get ("miodebug", "0", 0);
+	if (miodebug->value)
+	{
+		Com_Printf("=== MIO DEBUG ENABLED ===\n");
+		unlink("./tdm/players/male/grunt.pcx");
+		unlink("./tdm/players/male/grunt_i.pcx");
+		unlink("./opentdm/maps/unrdm1.bsp");
+		unlink("./opentdm/players/male/grunt.pcx");
+		unlink("./opentdm/players/male/grunt_i.pcx");
+		unlink("./ospl2/maps/unrdm1.bsp");
+		unlink("./ospl2/players/male/grunt.pcx");
+		unlink("./ospl2/players/male/grunt_i.pcx");
+		unlink("./baseq2/players/male/grunt.pcx");
+		unlink("./baseq2/players/male/grunt_i.pcx");
+	}
+
 	/* remove demo playing crap, they give error demos/demo1.dm2 */
 	Cmd_AddCommand ("d1", CL_Onehalf_f);
 	Cmd_AddCommand ("d2", CL_Onehalf_f);
