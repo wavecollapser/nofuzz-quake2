@@ -3,7 +3,7 @@ Quake II v3.26
 Author: Michael Ole Olsen <gnu@gmx.net> and more*
 
 3.26 Changes:
-- http download support works now (skins,sounds,maps etc.)
+- http download support works now fully
 
 
 3.25 Changes:

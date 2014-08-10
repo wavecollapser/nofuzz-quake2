@@ -77,7 +77,7 @@ int binaryWrite(char *file, char *data, int bytenum)
 	sprintf(tmpfile,"%s/%s.tmp2",FS_Gamedir(),file);
 	sprintf(tmpfile2,"%s/%s",FS_Gamedir(),file);
 
-	//Com_Printf("try to write %d bytes to %s..\n", bytenum, tmpfile);
+	//Com_Printf("[mio] try to write %d bytes to %s..\n", bytenum, tmpfile);
 
 	fh = fopen(tmpfile,"wb");
 	if (!fh) return 1;
@@ -278,35 +278,57 @@ char *gdirfix(char *s)
 	return s+2;
 }
 
+// remember our struct location, static ptr
+static struct MemoryStruct *memPtr;
+
 static void init(CURLM *cm, int i)
 {
   CURL *eh = curl_easy_init();
-  char buf[1024];
 
   // dont redo downloads!
   // only start a download if it is not already marked as started!
   if (!cls.dlqueue[i].started) 
   {
+	  char buf[1024];
+	  char tmp[256];
+	  char *priv=malloc(256);
 
-	  snprintf(buf,sizeof(buf)-1,"%s/%s/%s", httpdirfix(cls.downloadServer), 
-		  gdirfix(FS_Gamedir()), cls.dlqueue[i].url);
+	  struct MemoryStruct *chunk=malloc(sizeof (struct MemoryStruct));
+	  extern struct MemoryStruct *memPtr;
+	  memPtr=chunk;
+	  if (!chunk)
+		  Com_Printf("E: dlqueue malloc err!!!\n");
+	  else
+	  {
+		  chunk->memory=malloc(1);
+		  chunk->size=0;
 
-	  cls.dlqueue[i].started=true;
+		  snprintf(buf,sizeof(buf)-1,"%s/%s/%s", httpdirfix(cls.downloadServer), 
+			  gdirfix(FS_Gamedir()), cls.dlqueue[i].url);
 
-	  //for debug mio full webpath
-	  //Com_Printf("HTTP downloading %s ...\n   ",buf);
 
-	  //Com_Printf("--- MULTI HTTP downloading, got %d\n", i);
+			  //we got a working file handle we can hand over to curl
+			  cls.dlqueue[i].started=true;
 
-	  curl_easy_setopt(eh, CURLOPT_WRITEFUNCTION, cb);
-	  curl_easy_setopt(eh, CURLOPT_HEADER, 0L);
-	  curl_easy_setopt(eh, CURLOPT_URL, buf);
-	  curl_easy_setopt(eh, CURLOPT_PRIVATE, buf);
-	  curl_easy_setopt(eh, CURLOPT_VERBOSE, 0L);
-	  curl_easy_setopt(eh, CURLOPT_USERAGENT, "quake2 curl 3.26");
+			  //for debug mio full webpath
+			  //Com_Printf("HTTP downloading %s ...\n   ",buf);
 
-	  //Com_Printf("HTTP DL added %s to dlqueue...\n" , buf);
-	  curl_multi_add_handle(cm, eh);
+			  //Com_Printf("--- MULTI HTTP downloading, got %d\n", i);
+
+			  curl_easy_setopt(eh, CURLOPT_WRITEFUNCTION, cb);
+			  curl_easy_setopt(eh, CURLOPT_HEADER, 0L);
+			  curl_easy_setopt(eh, CURLOPT_URL, buf);
+
+			  strncpy(priv,cls.dlqueue[i].url,255);
+			  curl_easy_setopt(eh, CURLOPT_PRIVATE, priv);
+			  curl_easy_setopt(eh, CURLOPT_VERBOSE, 0L);
+			  curl_easy_setopt(eh, CURLOPT_USERAGENT, "quake2 curl 3.26");
+			  curl_easy_setopt(eh, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
+			  curl_easy_setopt(eh, CURLOPT_WRITEDATA, chunk);
+ 
+			  //Com_Printf("HTTP DL added %s to dlqueue...\n" , buf);
+			  curl_multi_add_handle(cm, eh);
+	  }
   }
 }
 
@@ -392,21 +414,35 @@ int curlFetch(struct url *ptr, int dlnum)
 	  // allow user to use console
 	  CL_SendCommand ();
 
-      if (msg->msg == CURLMSG_DONE) {
-        char *url;
+      if (msg->msg == CURLMSG_DONE)
+	  {
+        extern struct MemoryStruct *memPtr;
+		char *url;
 		double recvsize;
 		double totaltime;
-		char *priv;
+		char *localfile;
+		char *fullurl;
         CURL *e = msg->easy_handle;
         curl_easy_getinfo(msg->easy_handle, CURLINFO_PRIVATE, &url);
 		curl_easy_getinfo(msg->easy_handle, CURLINFO_SIZE_DOWNLOAD, &recvsize);
 		curl_easy_getinfo(msg->easy_handle, CURLINFO_TOTAL_TIME, &totaltime);
-		curl_easy_getinfo(msg->easy_handle, CURLINFO_EFFECTIVE_URL, &priv);
-				
-        Com_Printf("[HTTP] %s [200 OK, %.f bytes, %.0f kB/s]\n", priv, recvsize,recvsize/(1024*totaltime));
+		curl_easy_getinfo(msg->easy_handle, CURLINFO_PRIVATE, &localfile);
+		curl_easy_getinfo(msg->easy_handle, CURLINFO_EFFECTIVE_URL, &fullurl);
+
+        Com_Printf("[HTTP] %s [200 OK, %.f bytes, %.0f kB/s]\n", 
+			fullurl, recvsize,recvsize/(1024*totaltime));
+		
+
 		//int binaryWrite(char *file, char *data, int bytenum)
+		//int binaryWrite(localfile, char *data, recvsize)
 		//data received:msg->data.result
 		//msg->easy_handle
+		
+		//Com_Printf("memPtr bytes: %d\n",memPtr->size);
+		binaryWrite(localfile, memPtr->memory, memPtr->size);
+		
+		if (memPtr && memPtr->memory)
+		free(memPtr->memory);
 
         curl_multi_remove_handle(cm, e);
         curl_easy_cleanup(e);
@@ -414,8 +450,6 @@ int curlFetch(struct url *ptr, int dlnum)
       else {
         Com_Printf("E: CURLMsg (%d)\n", msg->msg);
       }
-
-
 
 	  /* not used as we only fetch one file at a time.. 
 	  else we need to make a dlqueue... if we want 2 at a time..
