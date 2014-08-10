@@ -130,14 +130,18 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 
 	// just queue for now
 	dlqueue_add(filename);
-	cls.dlqueue_files += 1; //1 more file added to queue to dl later
 
 	//cls.downloadnow=true;
 	// if we have received all files and put in queue,
 	// multi download them at once now
-	if (1)
+
+	//dlqueue_print();
+	//Com_Printf("dlqueuenum is now %d\n",cls.dlqueue_files);
+
+	if (cls.downloadnow)
 		if (curlFetch(cls.dlqueue,cls.dlqueue_files) == 0)
 			return true;
+
 
 	//if (curlFetch(filename) == 0)
 	//	return true;

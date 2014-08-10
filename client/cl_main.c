@@ -526,6 +526,7 @@ void CL_Connect_f (void)
 
 	// show http dl msg only once..
 	cls.httpdownloadmsg=0;
+	cls.dlqueue_files=0; //no files to dl yet
 }
 
 
@@ -1038,7 +1039,6 @@ CL_ReadPackets
 */
 void CL_ReadPackets (void)
 {
-connresetfix:
 	while (NET_GetPacket (NS_CLIENT, &net_from, &net_message))
 	{
 //	Com_Printf ("packet\n");
@@ -1428,6 +1428,14 @@ void CL_RequestNextDownload (void)
 	MSG_WriteString (&cls.netchan.message, va("begin %i\n", precache_spawncount) );
 }
 
+// to disable ½ demo playing, we dont want that in a multiplayer client
+// it shows errors in our console..
+void CL_Onehalf_f()
+{
+
+	return;
+}
+
 /*
 =================
 CL_Precache_f
@@ -1612,14 +1620,24 @@ void CL_InitLocal (void)
 	Cmd_AddCommand ("weapprev", NULL);
 
 #if MIODEBUG==1
+	unlink("./tdm/players/male/grunt.pcx");
+	unlink("./tdm/players/male/grunt_i.pcx");
 	unlink("./opentdm/maps/unrdm1.bsp");
 	unlink("./opentdm/players/male/grunt.pcx");
 	unlink("./opentdm/players/male/grunt_i.pcx");
+	unlink("./ospl2/maps/unrdm1.bsp");
 	unlink("./ospl2/players/male/grunt.pcx");
 	unlink("./ospl2/players/male/grunt_i.pcx");
 	unlink("./baseq2/players/male/grunt.pcx");
 	unlink("./baseq2/players/male/grunt_i.pcx");
 #endif
+	/* remove demo playing crap, they give error demos/demo1.dm2 */
+	Cmd_AddCommand ("d1", CL_Onehalf_f);
+	Cmd_AddCommand ("d2", CL_Onehalf_f);
+	Cmd_AddCommand ("d3", CL_Onehalf_f);
+	Cmd_AddCommand ("d4", CL_Onehalf_f);
+
+	cls.dlqueue_files=0; //no files to dl yet
 }
 
 
@@ -1771,18 +1789,12 @@ void CL_Frame (int msec)
 	if (!cl_timedemo->integer)
 	{
 			if (cls.state == ca_connected) {
-				if (extratime > 400)
-				{
-					//start HTTP dl now
-	cls.downloadnow=true;
-
-				}
 				if (extratime < 100)
 				{
-cls.dlqueue_files=0; //no files to dl yet
-					//dont download yet, just queue it..
-					cls.downloadnow=false;
+
 #ifdef USE_CURL
+					//dont download yet, just queue it..
+					cls.downloadnow=true;
 					for (i = 1; i < Cmd_Argc(); i++)
 					{
 						p = Cmd_Argv(i);
@@ -1792,7 +1804,8 @@ cls.dlqueue_files=0; //no files to dl yet
 							strcpy(cls.downloadServer,p);
 							if (!cls.httpdownloadmsg) { //miofixme
 								if (cls.downloadServer[0])
-								Com_Printf ("HTTP downloading enabled, URL: %s\n", cls.downloadServer);
+								Com_Printf ("HTTP downloading enabled, URL: %s\n", 
+									httpdirfix(cls.downloadServer));
 								cls.httpdownloadmsg=1;
 							}
 						}
@@ -1854,7 +1867,8 @@ cls.dlqueue_files=0; //no files to dl yet
 	// update audio
 	S_Update (cl.refdef.vieworg, cl.v_forward, cl.v_right, cl.v_up);
 	
-	CDAudio_Update();
+	//mio: no need for cd
+	//CDAudio_Update();
 
 	// advance local effects for next frame
 	CL_RunDLights ();
@@ -1920,7 +1934,9 @@ void CL_Init (void)
 	SCR_Init ();
 	cls.disable_screen = true;	// don't draw yet
 
-	CDAudio_Init ();
+	//mio: no need for cd audio, it will just slow things down
+	//nobody plays with cd in..
+	//CDAudio_Init ();
 	CL_InitLocal ();
 	IN_Init ();
 
@@ -1959,7 +1975,8 @@ void CL_Shutdown(void)
 
 	CL_WriteConfiguration (); 
 
-	CDAudio_Shutdown ();
+	//no need for cd: mio
+	//CDAudio_Shutdown ();
 	S_Shutdown();
 	IN_Shutdown ();
 	VID_Shutdown();

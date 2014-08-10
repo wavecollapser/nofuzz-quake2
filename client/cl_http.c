@@ -25,11 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 
 extern void CL_SendCommand (void);
-
-cvar_t	*cl_http_downloads;
-cvar_t	*cl_http_filelists;
-cvar_t	*cl_http_proxy;
-cvar_t	*cl_http_max_connections;
+char *httpdirfix(char *s);
+char *gdirfix(char *s);
 
 #define	HTTPDL_ABORT_NONE 0
 #define HTTPDL_ABORT_SOFT 1
@@ -188,31 +185,13 @@ struct urls
 	int id;
 	char *next;
 	int bytes;
+	qboolean started; // has download been started? dont start again
 };
 
-
-
-static const char *turls[] = {
-  "http://rlogin.dk/foobaz",
-  "http://rlogin.dk/roflmao",
-  "http://www.google.com",
-  "http://www.yahoo.com",
-  "http://www.ibm.com",
-  "http://www.mysql.com",
-  "http://www.oracle.com",
-  "http://www.ripe.net",
-  "http://www.iana.org",
-  "http://www.nbc.com",
-  "http://slashdot.org",
-  "http://www.bloglines.com",
-  "http://www.techweb.com",
-  "http://www.newslink.org",
-  "http://www.un.org",
-};
 
 /* max 2 conns to http at a time, don't rape apache servers */
 #define MAX 2
-#define CNT sizeof(turls)/sizeof(char*)
+
 
 static size_t cb(char *d, size_t n, size_t l, void *p)
 {
@@ -227,7 +206,7 @@ static size_t cb(char *d, size_t n, size_t l, void *p)
 #define MAXFILES 100
 #define URLMAXLEN 250
 
-
+//fixme: dlqueue_free
 struct urls *dlqueue_add(char url[])
 {
   // remember our queueptr
@@ -235,8 +214,8 @@ struct urls *dlqueue_add(char url[])
   static int queuenum;
   int i;
   static struct urls *tmp;
-
-  Com_Printf("call again... ptr should be const: %p\n",p);
+	
+  //Com_Printf("[mio] try to add %s to dlqueue...\n",url);
 
   // first time allocate for all files, 100 url structs
   if (!p) 
@@ -261,44 +240,74 @@ struct urls *dlqueue_add(char url[])
 	  p=tmp;
 	  cls.dlqueue=p;
   }
-  // time to add to dlqueue
-  
-  strncpy(p->url,url,URLMAXLEN-1);
-  p->next=0xDEADBEEF;
-  p->id=queuenum;
-  p++;
 
-  
-  Com_Printf("queued url: %s\n",url);
+  // only add dl queue if it doesn't already exist!
+  if (!in_dlqueue(url))
+  {
+	  strncpy(p->url,url,URLMAXLEN-1);
+	  p->next=0xDEADBEEF;
+	  p->id=queuenum;
+	  p->started=false;
+	  p++;
 
-  queuenum++;
+	  //Com_Printf("queued url: %s\n",url);
 
-  return p;
+	  cls.dlqueue_files = queuenum;
+	  if (cls.dlqueue_files == 0)
+		  cls.dlqueue_files++;
+
+	  queuenum++;
+  }
+
+  return p; 
 }
 
-static struct urls *url;
+/* need to fix HTTP url with these 2 functions */
+char *httpdirfix(char *s)
+{
+	if (!s) return NULL;
+	
+	if (s[strlen(s)-1]=='/')
+		s[strlen(s)-1]='\0';
+
+	return s;
+}
+char *gdirfix(char *s)
+{
+	if (s[0]=='.' && s[1]=='/')
+	return s+2;
+}
 
 static void init(CURLM *cm, int i)
 {
   CURL *eh = curl_easy_init();
-
   char buf[1024];
-  snprintf(buf,sizeof(buf)-1,"%s/%s/%s", cls.downloadServer, FS_Gamedir(), cls.dlqueue[i].url);
 
-  //for debug mio full webpath
-  //Com_Printf("HTTP downloading %s ...\n   ",buf);
+  // dont redo downloads!
+  // only start a download if it is not already marked as started!
+  if (!cls.dlqueue[i].started) 
+  {
 
-  Com_Printf("--- MULTI HTTP downloading\n");
+	  snprintf(buf,sizeof(buf)-1,"%s/%s/%s", httpdirfix(cls.downloadServer), 
+		  gdirfix(FS_Gamedir()), cls.dlqueue[i].url);
 
-  curl_easy_setopt(eh, CURLOPT_WRITEFUNCTION, cb);
-  curl_easy_setopt(eh, CURLOPT_HEADER, 0L);
-  curl_easy_setopt(eh, CURLOPT_URL, buf);
-  curl_easy_setopt(eh, CURLOPT_PRIVATE, buf);
-  curl_easy_setopt(eh, CURLOPT_VERBOSE, 0L);
-  curl_easy_setopt(eh, CURLOPT_USERAGENT, "quake2 curl 3.26");
+	  cls.dlqueue[i].started=true;
 
-  Com_Printf("HTTP DL added %s to dlqueue...\n" , buf);
-  curl_multi_add_handle(cm, eh);
+	  //for debug mio full webpath
+	  //Com_Printf("HTTP downloading %s ...\n   ",buf);
+
+	  //Com_Printf("--- MULTI HTTP downloading, got %d\n", i);
+
+	  curl_easy_setopt(eh, CURLOPT_WRITEFUNCTION, cb);
+	  curl_easy_setopt(eh, CURLOPT_HEADER, 0L);
+	  curl_easy_setopt(eh, CURLOPT_URL, buf);
+	  curl_easy_setopt(eh, CURLOPT_PRIVATE, buf);
+	  curl_easy_setopt(eh, CURLOPT_VERBOSE, 0L);
+	  curl_easy_setopt(eh, CURLOPT_USERAGENT, "quake2 curl 3.26");
+
+	  //Com_Printf("HTTP DL added %s to dlqueue...\n" , buf);
+	  curl_multi_add_handle(cm, eh);
+  }
 }
 
 int curlFetch(struct url *ptr, int dlnum)
@@ -308,15 +317,16 @@ int curlFetch(struct url *ptr, int dlnum)
   CURLMsg *msg;
   long L=100;
   unsigned int C=0;
-  int M, Q, U = -2; // originally -1, mio, but reserved, use a unique FD, 515176 seems to work on windows
+  int M, Q, U = -1; // originally -1, mio, but reserved, use a unique FD, 515176 seems to work on windows
   fd_set R, W, E;
   struct timeval T;
+  CURLMcode	ret;
 
   // sanity check, dont dl if dlserver supplied is weird..
   if (!cls.downloadServer)
 	  return 0;
 
-  Com_Printf("INIT newcurl dl now\n");
+  //Com_Printf("INIT newcurl dl now\n");
   curl_global_init(CURL_GLOBAL_ALL);
 
   cm = curl_multi_init();
@@ -325,8 +335,7 @@ int curlFetch(struct url *ptr, int dlnum)
      uses */
   curl_easy_setopt(cm, CURLMOPT_MAXCONNECTS, (long)MAX);
 
-  Com_Printf("TIME TO INIT YESSSS!!!\n\n");
-
+  //Com_Printf("[mio] init all multiqueue dls at once now!!\n\n");
   // init multiqueue with all urls
   for (C = 0; C < dlnum; ++C) {
     init(cm, C);
@@ -334,64 +343,84 @@ int curlFetch(struct url *ptr, int dlnum)
 
   //init(cm, C, url);
 
-  Com_Printf("[mio] MultiCurl() while loop loaded\n");
+  //Com_Printf("[mio] MultiCurl() while loop loaded\n");
   while (U) {
-    curl_multi_perform(cm, &U);
+    ret = curl_multi_perform(cm, &U);
 
+	/*  newhandlecount = U , so we just finished a dl, see what returncode was.. */
     if (U) {
       FD_ZERO(&R);
       FD_ZERO(&W);
       FD_ZERO(&E);
 
+		if (ret != CURLM_OK)
+		{
+			Com_Printf ("curl_multi_perform error. Aborting HTTP downloads.\n");
+		}
+
       if (curl_multi_fdset(cm, &R, &W, &E, &M)) {
         Com_Printf("E: curl_multi_fdset\n");
         return 1;
       }
-/*      if (L == -1)
+      if (L == -1)
         L = 100;
 
       if (M == -1) {
+		  /* obviously we need to sleep a 
+		  short while to we DO NOT RUN OUT OF FDs! */
 #ifdef WIN32
         Sleep(L);
 #else
         sleep(L / 1000);
 #endif
-      } else {*/
-        //T.tv_sec = L/1000;
-        //T.tv_usec = (L%1000)*1000;
-		T.tv_sec = 5;
-        T.tv_usec = 0;
-
-
+      } else {
+        T.tv_sec = L/1000;
+        T.tv_usec = (L%1000)*1000;
+		//T.tv_sec = 5;
+        //T.tv_usec = 0;
         if (0 > select(M+1, &R, &W, &E, &T)) {
           Com_Printf("E: select(%i,,,,%li): %i: %s\n",
               M+1, L, errno, strerror(errno));
           return 1;
         }
+	  }
       
     }
 
     while ((msg = curl_multi_info_read(cm, &Q))) {
+
+	  // allow user to use console
+	  CL_SendCommand ();
+
       if (msg->msg == CURLMSG_DONE) {
         char *url;
+		double recvsize;
+		double totaltime;
+		char *priv;
         CURL *e = msg->easy_handle;
         curl_easy_getinfo(msg->easy_handle, CURLINFO_PRIVATE, &url);
-        Com_Printf("R: %d - %s <%s>\n",
-                msg->data.result, curl_easy_strerror(msg->data.result), url);
+		curl_easy_getinfo(msg->easy_handle, CURLINFO_SIZE_DOWNLOAD, &recvsize);
+		curl_easy_getinfo(msg->easy_handle, CURLINFO_TOTAL_TIME, &totaltime);
+		curl_easy_getinfo(msg->easy_handle, CURLINFO_EFFECTIVE_URL, &priv);
+				
+        Com_Printf("[HTTP] %s [200 OK, %.f bytes, %.0f kB/s]\n", priv, recvsize,recvsize/(1024*totaltime));
+		//int binaryWrite(char *file, char *data, int bytenum)
+		//data received:msg->data.result
+		//msg->easy_handle
+
         curl_multi_remove_handle(cm, e);
         curl_easy_cleanup(e);
       }
       else {
-        fprintf(stderr, "E: CURLMsg (%d)\n", msg->msg);
+        Com_Printf("E: CURLMsg (%d)\n", msg->msg);
       }
 
-	  // allow user to use console
-	  //CL_SendCommand ();
+
 
 	  /* not used as we only fetch one file at a time.. 
 	  else we need to make a dlqueue... if we want 2 at a time..
 	  */
-      if (C < CNT) {
+      if (C < dlnum) {
         init(cm, C++);
         U++; 
       }
@@ -407,5 +436,24 @@ int curlFetch(struct url *ptr, int dlnum)
   return 0;
 }
 
+/* check if file is in queue already */
+qboolean in_dlqueue(char *s)
+{
+	int i;
+	for (i=0;i<cls.dlqueue_files;++i)
+		if (!strcmp(s,cls.dlqueue[i].url))
+			return true;
+
+	return false;
+
+}
+
+//for debugging only
+dlqueue_print()
+{
+int i;
+for (i=0;i<cls.dlqueue_files;++i)
+	Com_Printf("[queue #%d]: %s\n",i, cls.dlqueue[i].url);
+}
 
 #endif
