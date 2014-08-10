@@ -110,8 +110,8 @@ to start a download from the server.
 qboolean	CL_CheckOrDownloadFile (char *filename)
 {
 	FILE *fp;
-	char	name[MAX_OSPATH];
-	char tmp[512], *tp=tmp;
+	char name[MAX_OSPATH];
+	char buf[512];
 
 	if (strstr (filename, ".."))
 	{
@@ -124,23 +124,24 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 		return true;
 	}
 
+	// we need to create both a ./gamedir and custom dirs below it
+	if (!filename) return true;
+	snprintf(buf,sizeof(buf),"%s/%s",FS_Gamedir(),filename);
+
 #ifdef USE_CURL
 	// if we fetched the file and renamed successfully dont try to dl again!
-	FS_CreatePath (filename);
+	FS_CreatePath (buf);
 
-	// just queue for now
 	dlqueue_add(filename);
 
-	//cls.downloadnow=true;
-	// if we have received all files and put in queue,
-	// multi download them at once now
-
-	//dlqueue_print();
-	//Com_Printf("dlqueuenum is now %d\n",cls.dlqueue_files);
-
 	if (cls.downloadnow)
+	{
+		//dlqueue_print();
 		if (curlFetch(cls.dlqueue,cls.dlqueue_files) == 0)
 			return true;
+	}
+	else // wait to download..
+		return false;
 
 
 	//if (curlFetch(filename) == 0)

@@ -1182,7 +1182,11 @@ qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboole
 	s = width*height;
 
 	if (s > sizeof(trans)/4)
-		ri.Sys_Error (ERR_DROP, "GL_Upload8: too large");
+	{
+		// mio fix, dont disconnect with GL_Upload8 too large error on texture pak /wal /tga dl
+		return false;
+		//mio uncommented ri.Sys_Error (ERR_DROP, "GL_Upload8: too large");
+	}
 
 	if ( qglColorTableEXT && 
 		 gl_ext_palettedtexture->value && 

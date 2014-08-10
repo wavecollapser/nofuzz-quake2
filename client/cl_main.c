@@ -1553,15 +1553,6 @@ void CL_InitLocal (void)
 
 	cl_vwep = Cvar_Get ("cl_vwep", "1", CVAR_ARCHIVE);
 
-#ifdef USE_HURL
-	cl_http_proxy = Cvar_Get ("cl_http_proxy", "", 0);
-	cl_http_filelists = Cvar_Get ("cl_http_filelists", "1", 0);
-	cl_http_downloads = Cvar_Get ("cl_http_downloads", "1", 0);
-	cl_http_max_connections = Cvar_Get ("cl_http_max_connections", "2", 0);
-	cl_http_max_connections->OnChange = OnChange_http_max_connections;
-	OnChange_http_max_connections(cl_http_max_connections, cl_http_max_connections->resetString);
-#endif
-
 	//
 	// register our commands
 	//
@@ -1793,8 +1784,9 @@ void CL_Frame (int msec)
 				{
 
 #ifdef USE_CURL
-					//dont download yet, just queue it..
 					cls.downloadnow=true;
+
+					//dont download yet, just queue it..
 					for (i = 1; i < Cmd_Argc(); i++)
 					{
 						p = Cmd_Argv(i);
@@ -1941,11 +1933,6 @@ void CL_Init (void)
 	IN_Init ();
 
 	
-#ifdef USE_HURL
-	CL_InitHTTPDownloads ();
-#endif
-
-
 
 //	Cbuf_AddText ("exec autoexec.cfg\n");
 	FS_ExecAutoexec ();
@@ -1983,15 +1970,3 @@ void CL_Shutdown(void)
 }
 
 
-#ifdef USE_HURL
-void OnChange_http_max_connections (cvar_t *self, const char *oldValue)
-{
-	if (self->integer > 4)
-		Cvar_Set (self->name, "4");
-	else if (self->integer < 1)
-		Cvar_Set (self->name, "1");
-
-	if (self->integer > 2)
-		Com_Printf ("WARNING: Changing the maximum connections higher than 2 violates the HTTP specification recommendations. Doing so may result in you being blocked from the remote system and offers no performance benefits unless you are on a very high latency link (ie, satellite)\n");
-}
-#endif

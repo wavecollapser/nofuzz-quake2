@@ -325,6 +325,8 @@ static void init(CURLM *cm, int i)
 			  curl_easy_setopt(eh, CURLOPT_USERAGENT, "quake2 curl 3.26");
 			  curl_easy_setopt(eh, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 			  curl_easy_setopt(eh, CURLOPT_WRITEDATA, chunk);
+			  //chunk is normally a FILE * but we feed it a struct function instead...
+			  //writememorycallback func takes a struct and writes it
  
 			  //Com_Printf("HTTP DL added %s to dlqueue...\n" , buf);
 			  curl_multi_add_handle(cm, eh);
@@ -332,6 +334,11 @@ static void init(CURLM *cm, int i)
   }
 }
 
+/* need to reconsider this, it is being called all the time, not quite what we wanted...
+   need to check if curdlnum > lastdlnum and only run if we have received full dlqueue
+
+  FIXME dont run every time, only if dlqueue is full!!!
+ */
 int curlFetch(struct url *ptr, int dlnum)
 {
 
@@ -343,6 +350,7 @@ int curlFetch(struct url *ptr, int dlnum)
   fd_set R, W, E;
   struct timeval T;
   CURLMcode	ret;
+  qboolean got404=false;
 
   // sanity check, dont dl if dlserver supplied is weird..
   if (!cls.downloadServer)
@@ -358,6 +366,7 @@ int curlFetch(struct url *ptr, int dlnum)
   curl_easy_setopt(cm, CURLMOPT_MAXCONNECTS, (long)MAX);
 
   //Com_Printf("[mio] init all multiqueue dls at once now!!\n\n");
+  //Com_Printf("[mio curlFetch] %d in queue\n",dlnum);
   // init multiqueue with all urls
   for (C = 0; C < dlnum; ++C) {
     init(cm, C);
@@ -377,7 +386,8 @@ int curlFetch(struct url *ptr, int dlnum)
 
 		if (ret != CURLM_OK)
 		{
-			Com_Printf ("curl_multi_perform error. Aborting HTTP downloads.\n");
+			Com_Printf ("curl_multi_perform error, Aborting HTTP downloads.\n");
+			return 1;
 		}
 
       if (curl_multi_fdset(cm, &R, &W, &E, &M)) {
@@ -416,31 +426,58 @@ int curlFetch(struct url *ptr, int dlnum)
 
       if (msg->msg == CURLMSG_DONE)
 	  {
+		long responseCode;
         extern struct MemoryStruct *memPtr;
 		char *url;
 		double recvsize;
 		double totaltime;
 		char *localfile;
 		char *fullurl;
+		int remainingFiles;
+		static int finishcnt;
+		
         CURL *e = msg->easy_handle;
+		curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE, &responseCode);
         curl_easy_getinfo(msg->easy_handle, CURLINFO_PRIVATE, &url);
 		curl_easy_getinfo(msg->easy_handle, CURLINFO_SIZE_DOWNLOAD, &recvsize);
 		curl_easy_getinfo(msg->easy_handle, CURLINFO_TOTAL_TIME, &totaltime);
 		curl_easy_getinfo(msg->easy_handle, CURLINFO_PRIVATE, &localfile);
 		curl_easy_getinfo(msg->easy_handle, CURLINFO_EFFECTIVE_URL, &fullurl);
 
-        Com_Printf("[HTTP] %s [200 OK, %.f bytes, %.0f kB/s]\n", 
-			fullurl, recvsize,recvsize/(1024*totaltime));
+		//buggy for now, disabled
+		//remainingFiles=cls.dlqueue_files-finishcnt;
+		remainingFiles=0;
+
+		if (responseCode == 404)
+		{
+			// we got at least 1 404 error, so resume with udp downloads to fetch those
+			// not all files are avail on http, some may be in paks
+			// so we can resume those via udp...
+			Com_Printf("[HTTP] %s [404 Not Found] [x remaining files]\n", 
+				localfile, recvsize/1000,recvsize/(1000*totaltime),remainingFiles);
+		
+			got404=true;
+			cls.downloadnow=false; // dont download over http again...
+		}
+		else if (responseCode == 200)
+		{
+			// only save if successfully downloaded!
+
+			Com_Printf("[HTTP] %s [%.f kB, %.0f kB/sec] [x remaining files]\n", 
+				localfile, recvsize/1000,recvsize/(1000*totaltime),remainingFiles);
 		
 
-		//int binaryWrite(char *file, char *data, int bytenum)
-		//int binaryWrite(localfile, char *data, recvsize)
-		//data received:msg->data.result
-		//msg->easy_handle
+			//int binaryWrite(char *file, char *data, int bytenum)
+			//int binaryWrite(localfile, char *data, recvsize)
+			//data received:msg->data.result
+			//msg->easy_handle
+			
+			//Com_Printf("memPtr bytes: %d\n",memPtr->size);
+			binaryWrite(localfile, memPtr->memory, memPtr->size);
+		}
 		
-		//Com_Printf("memPtr bytes: %d\n",memPtr->size);
-		binaryWrite(localfile, memPtr->memory, memPtr->size);
-		
+		finishcnt++;
+
 		if (memPtr && memPtr->memory)
 		free(memPtr->memory);
 
@@ -449,6 +486,7 @@ int curlFetch(struct url *ptr, int dlnum)
       }
       else {
         Com_Printf("E: CURLMsg (%d)\n", msg->msg);
+		return 1;
       }
 
 	  /* not used as we only fetch one file at a time.. 
@@ -467,7 +505,10 @@ int curlFetch(struct url *ptr, int dlnum)
   curl_global_cleanup();
 
   // return 0 for success, or 1 for 404 - to keep calling us!
-  return 0;
+  if (got404)
+	  return 1;
+  else
+	  return 0;
 }
 
 /* check if file is in queue already */
@@ -482,12 +523,12 @@ qboolean in_dlqueue(char *s)
 
 }
 
-//for debugging only
+/* for debugging purposes only */
 dlqueue_print()
 {
-int i;
-for (i=0;i<cls.dlqueue_files;++i)
-	Com_Printf("[queue #%d]: %s\n",i, cls.dlqueue[i].url);
+	int i;
+	for (i=0;i<cls.dlqueue_files;++i)
+		Com_Printf("[queue #%d]: %s\n",i, cls.dlqueue[i].url);
 }
 
 #endif
