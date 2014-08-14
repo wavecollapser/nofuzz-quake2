@@ -913,7 +913,7 @@ void CL_ConnectionlessPacket (void)
 
 	c = Cmd_Argv(0);
 
-	Com_Printf ("%s: %s\n", NET_AdrToString (net_from), c);
+	//Com_Printf ("%s: %s\n", NET_AdrToString (net_from), c);
 
 	NET_StringToAdr (cls.servername, &remoteAdr);
 
