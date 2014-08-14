@@ -367,13 +367,14 @@ qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 						NET_AdrToString(*net_from));
 				continue;
 			}
-
+			if (NET_ErrorString() != NULL) {
 			if (dedicated->value)	// let dedicated servers continue after errors
 				Com_Printf ("NET_GetPacket: %s from %s\n", NET_ErrorString(),
 						NET_AdrToString(*net_from));
 			else
 				Com_Error (ERR_DROP, "NET_GetPacket: %s from %s", 
 						NET_ErrorString(), NET_AdrToString(*net_from));
+			}
 			continue;
 		}
 
@@ -831,7 +832,7 @@ char *NET_ErrorString (void)
 	case WSAENETUNREACH: return "WSAENETUNREACH";
 	case WSAENETRESET: return "WSAENETRESET";
 	case WSAECONNABORTED: return "WSWSAECONNABORTEDAEINTR";
-	case WSAECONNRESET: return "WSAECONNRESET";
+	case WSAECONNRESET: return false;
 	case WSAENOBUFS: return "WSAENOBUFS";
 	case WSAEISCONN: return "WSAEISCONN";
 	case WSAENOTCONN: return "WSAENOTCONN";
