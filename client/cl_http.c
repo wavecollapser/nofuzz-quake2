@@ -354,18 +354,21 @@ int curlFetch(struct url *ptr, int dlnum)
 
 		if (responseCode == 404)
 		{
-			Com_Printf("[HTTP] %s [404 Not Found] [x remaining files]\n", 
+			//Com_Printf("[HTTP] %s [404 Not Found] [x remaining files]\n", 
+				//localfile, recvsize/1000,recvsize/(1000*totaltime),remainingFiles);
+			Com_Printf("[HTTP] %s [404 Not Found]\n", 
 				localfile, recvsize/1000,recvsize/(1000*totaltime),remainingFiles);
-		
 			got404=true;
 			cls.downloadnow=false; // dont download over http again...
 		}
 		else if (responseCode == 200)
 		{
-
+			/*
 			Com_Printf("[HTTP] %s [%.f kB, %.0f kB/sec] [x remaining files]\n", 
 				localfile, recvsize/1000,recvsize/(1000*totaltime),remainingFiles);
-		
+			*/
+			Com_Printf("[HTTP] %s [%.f kB, %.0f kB/sec]\n", 
+				localfile, recvsize/1000,recvsize/(1000*totaltime),remainingFiles);
 			binaryWrite(localfile, memPtr->memory, memPtr->size);
 		}
 		

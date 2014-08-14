@@ -889,7 +889,6 @@ void CL_Skins_f (void)
 	}
 }
 
-
 /*
 =================
 CL_ConnectionlessPacket
@@ -1786,8 +1785,14 @@ void CL_Frame (int msec)
 
 	if (!cl_timedemo->integer)
 	{
-			if (cls.state == ca_connected) {
-				if (extratime < 100)
+		if (cls.state == ca_connected && extratime < 100)
+			return;			// don't flood packets out while connecting
+		if (extratime < 1000/cl_maxfps->value)
+			return;			// framerate is too high
+
+			if (cls.state == ca_connected) 
+			{
+				if (extratime < 200)
 				{
 
 #ifdef USE_CURL
@@ -1813,9 +1818,7 @@ void CL_Frame (int msec)
 				;
 #endif
 				}
-			} else {
-				if (extratime < 1000/cl_maxfps->integer)
-					;	// packetrate is too high
+		
 			}
 	}
 
