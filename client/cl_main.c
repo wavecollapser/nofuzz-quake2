@@ -806,7 +806,8 @@ void CL_ParseStatusMessage (void)
 
 	s = MSG_ReadString(&net_message);
 
-	Com_Printf ("%s\n", s);
+	// mio disabled, we dont want status info in console only in menu!
+	//Com_Printf ("%s\n", s);
 	M_AddToServerList (net_from, s);
 }
 
@@ -828,7 +829,7 @@ void CL_PingServers_f (void)
 	NET_Config (true);		// allow remote
 
 	// send a broadcast packet
-	Com_Printf ("pinging broadcast...\n");
+	//Com_Printf ("pinging broadcast...\n");
 
 	noudp = Cvar_Get ("noudp", "0", CVAR_NOSET);
 	if (!noudp->value)
@@ -854,7 +855,7 @@ void CL_PingServers_f (void)
 		if (!adrstring || !adrstring[0])
 			continue;
 
-		Com_Printf ("pinging %s...\n", adrstring);
+		//Com_Printf ("pinging %s...\n", adrstring);
 		if (!NET_StringToAdr (adrstring, &adr))
 		{
 			Com_Printf ("Bad address: %s\n", adrstring);
@@ -1925,7 +1926,7 @@ void CL_Init (void)
 	VID_Init ();
 	S_Init ();	// sound must be initialized after window is created
 #endif
-	
+
 	V_Init ();
 	
 	net_message.data = net_message_buffer;
@@ -1934,7 +1935,9 @@ void CL_Init (void)
 	M_Init ();	
 	
 	SCR_Init ();
-	cls.disable_screen = true;	// don't draw yet
+	
+	//miofix, disabled this:
+	//cls.disable_screen = true;	 don't draw yet
 
 	//mio: no need for cd audio, it will just slow things down
 	//nobody plays with cd in..
