@@ -1077,7 +1077,7 @@ static float ClampCvar( float min, float max, float value )
 
 static void ControlsSetMenuItemValues( void )
 {
-	s_options_sfxvolume_slider.curvalue		= Cvar_VariableValue( "s_volume" ) * 10;
+	s_options_sfxvolume_slider.curvalue		= Cvar_VariableValue( "s_volume" ) * 80;
 	s_options_cdvolume_box.curvalue 		= !Cvar_VariableValue("cd_nocd");
 	s_options_quality_list.curvalue			= !Cvar_VariableValue( "s_loadas8bit" );
 	s_options_sensitivity_slider.curvalue	= ( sensitivity->value ) * 2;
@@ -1130,7 +1130,7 @@ static void LookstrafeFunc( void *unused )
 
 static void UpdateVolumeFunc( void *unused )
 {
-	Cvar_SetValue( "s_volume", s_options_sfxvolume_slider.curvalue / 10 );
+	Cvar_SetValue( "s_volume", s_options_sfxvolume_slider.curvalue / 80 );
 }
 
 static void UpdateCDVolumeFunc( void *unused )
@@ -1234,7 +1234,7 @@ void Options_MenuInit( void )
 	s_options_sfxvolume_slider.generic.callback	= UpdateVolumeFunc;
 	s_options_sfxvolume_slider.minvalue		= 0;
 	s_options_sfxvolume_slider.maxvalue		= 10;
-	s_options_sfxvolume_slider.curvalue		= Cvar_VariableValue( "s_volume" ) * 10;
+	s_options_sfxvolume_slider.curvalue		= Cvar_VariableValue( "s_volume" ) * 80;
 
 	s_options_cdvolume_box.generic.type	= MTYPE_SPINCONTROL;
 	s_options_cdvolume_box.generic.x		= 0;

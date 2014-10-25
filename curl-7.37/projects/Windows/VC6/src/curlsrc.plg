@@ -1,0 +1,544 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: libcurl - Win32 DLL Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x409 /fo"..\..\..\..\build\Win32\VC6\DLL Release\lib/libcurl.res" /i "\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib" /d "NDEBUG" "C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\libcurl.rc"" 
+Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSP19.tmp" with contents
+[
+/nologo /MD /W3 /O2 /I "C:\Program Files\Microsoft Platform SDK\Include" /I "..\..\..\..\include" /I "..\..\..\..\lib" /D "WIN32" /D "NDEBUG" /D "BUILDING_LIBCURL" /Fo"..\..\..\..\build\Win32\VC6\DLL Release\lib/" /Fd"..\..\..\..\build\Win32\VC6\DLL Release\lib/" /FD /EHsc /c 
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\amigaos.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\asyn-ares.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\asyn-thread.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\vtls\axtls.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\base64.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\bundles.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\conncache.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\connect.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\content_encoding.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\cookie.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_addrinfo.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\vtls\curl_darwinssl.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_fnmatch.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_gethostname.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_gssapi.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_memrchr.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_multibyte.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_ntlm.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_ntlm_core.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_ntlm_msgs.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_ntlm_wb.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_rtmp.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_sasl.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_sasl_sspi.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\vtls\curl_schannel.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_sspi.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\curl_threads.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\vtls\cyassl.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\dict.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\dotdot.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\easy.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\escape.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\file.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\fileinfo.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\formdata.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\ftp.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\ftplistparser.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\getenv.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\getinfo.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\gopher.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\vtls\gskit.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\vtls\gtls.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\hash.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\hmac.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\hostasyn.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\hostcheck.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\hostip.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\hostip4.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\hostip6.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\hostsyn.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\http.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\http2.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\http_chunks.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\http_digest.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\http_negotiate.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\http_negotiate_sspi.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\http_proxy.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\idn_win32.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\if2ip.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\imap.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\inet_ntop.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\inet_pton.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\krb5.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\ldap.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\llist.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\md4.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\md5.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\memdebug.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\mprintf.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\multi.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\netrc.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\non-ascii.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\nonblock.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\vtls\nss.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\openldap.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\vtls\openssl.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\parsedate.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\pingpong.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\pipeline.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\vtls\polarssl.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\vtls\polarssl_threadlock.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\pop3.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\progress.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\vtls\qssl.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\rawstr.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\rtsp.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\security.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\select.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\sendf.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\share.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\slist.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\smtp.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\socks.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\socks_gssapi.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\socks_sspi.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\speedcheck.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\splay.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\ssh.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\strdup.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\strequal.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\strerror.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\strtok.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\strtoofft.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\telnet.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\tftp.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\timeval.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\transfer.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\url.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\version.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\vtls\vtls.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\warnless.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\wildcard.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\x509asn1.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSP19.tmp" 
+Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1A.tmp" with contents
+[
+advapi32.lib wldap32.lib ws2_32.lib /nologo /dll /pdb:none /machine:I386 /out:"..\..\..\..\build\Win32\VC6\DLL Release/libcurl.dll" /implib:"..\..\..\..\build\Win32\VC6\DLL Release/libcurl.lib" /fixed:no /release 
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\amigaos.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\asyn-ares.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\asyn-thread.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\axtls.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\base64.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\bundles.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\conncache.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\connect.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\content_encoding.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\cookie.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_addrinfo.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_darwinssl.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_fnmatch.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_gethostname.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_gssapi.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_memrchr.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_multibyte.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_ntlm.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_ntlm_core.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_ntlm_msgs.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_ntlm_wb.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_rtmp.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_sasl.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_sasl_sspi.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_schannel.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_sspi.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\curl_threads.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\cyassl.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\dict.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\dotdot.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\easy.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\escape.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\file.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\fileinfo.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\formdata.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\ftp.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\ftplistparser.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\getenv.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\getinfo.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\gopher.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\gskit.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\gtls.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\hash.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\hmac.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\hostasyn.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\hostcheck.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\hostip.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\hostip4.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\hostip6.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\hostsyn.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\http.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\http2.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\http_chunks.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\http_digest.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\http_negotiate.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\http_negotiate_sspi.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\http_proxy.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\idn_win32.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\if2ip.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\imap.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\inet_ntop.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\inet_pton.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\krb5.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\ldap.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\llist.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\md4.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\md5.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\memdebug.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\mprintf.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\multi.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\netrc.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\non-ascii.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\nonblock.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\nss.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\openldap.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\openssl.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\parsedate.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\pingpong.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\pipeline.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\polarssl.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\polarssl_threadlock.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\pop3.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\progress.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\qssl.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\rawstr.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\rtsp.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\security.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\select.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\sendf.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\share.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\slist.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\smtp.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\socks.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\socks_gssapi.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\socks_sspi.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\speedcheck.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\splay.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\ssh.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\strdup.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\strequal.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\strerror.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\strtok.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\strtoofft.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\telnet.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\tftp.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\timeval.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\transfer.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\url.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\version.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\vtls.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\warnless.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\wildcard.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\x509asn1.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\lib\libcurl.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1A.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+amigaos.c
+asyn-ares.c
+asyn-thread.c
+axtls.c
+base64.c
+bundles.c
+conncache.c
+connect.c
+content_encoding.c
+cookie.c
+curl_addrinfo.c
+curl_darwinssl.c
+curl_fnmatch.c
+curl_gethostname.c
+curl_gssapi.c
+curl_memrchr.c
+curl_multibyte.c
+curl_ntlm.c
+curl_ntlm_core.c
+curl_ntlm_msgs.c
+Generating Code...
+Compiling...
+curl_ntlm_wb.c
+curl_rtmp.c
+curl_sasl.c
+curl_sasl_sspi.c
+curl_schannel.c
+curl_sspi.c
+curl_threads.c
+cyassl.c
+dict.c
+dotdot.c
+easy.c
+escape.c
+file.c
+fileinfo.c
+formdata.c
+ftp.c
+ftplistparser.c
+getenv.c
+getinfo.c
+gopher.c
+Generating Code...
+Compiling...
+gskit.c
+gtls.c
+hash.c
+hmac.c
+hostasyn.c
+hostcheck.c
+hostip.c
+hostip4.c
+hostip6.c
+hostsyn.c
+http.c
+http2.c
+http_chunks.c
+http_digest.c
+http_negotiate.c
+http_negotiate_sspi.c
+http_proxy.c
+idn_win32.c
+if2ip.c
+imap.c
+Generating Code...
+Compiling...
+inet_ntop.c
+inet_pton.c
+krb5.c
+ldap.c
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\schnlsp.h(196) : warning C4005: 'SEC_I_INCOMPLETE_CREDENTIALS' : macro redefinition
+        C:\Program Files\Microsoft Platform SDK\Include\winerror.h(22567) : see previous definition of 'SEC_I_INCOMPLETE_CREDENTIALS'
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\schnlsp.h(198) : warning C4005: 'SEC_E_INCOMPLETE_CREDENTIALS' : macro redefinition
+        C:\Program Files\Microsoft Platform SDK\Include\winerror.h(22549) : see previous definition of 'SEC_E_INCOMPLETE_CREDENTIALS'
+C:\Program Files\Microsoft Visual Studio\VC98\INCLUDE\schnlsp.h(211) : warning C4005: 'SEC_I_RENEGOTIATE' : macro redefinition
+        C:\Program Files\Microsoft Platform SDK\Include\winerror.h(22576) : see previous definition of 'SEC_I_RENEGOTIATE'
+llist.c
+md4.c
+md5.c
+memdebug.c
+mprintf.c
+multi.c
+netrc.c
+non-ascii.c
+nonblock.c
+nss.c
+openldap.c
+openssl.c
+parsedate.c
+pingpong.c
+pipeline.c
+polarssl.c
+Generating Code...
+Compiling...
+polarssl_threadlock.c
+pop3.c
+progress.c
+qssl.c
+rawstr.c
+rtsp.c
+security.c
+select.c
+sendf.c
+share.c
+slist.c
+smtp.c
+socks.c
+socks_gssapi.c
+socks_sspi.c
+speedcheck.c
+splay.c
+ssh.c
+strdup.c
+strequal.c
+Generating Code...
+Compiling...
+strerror.c
+strtok.c
+strtoofft.c
+telnet.c
+tftp.c
+timeval.c
+transfer.c
+url.c
+version.c
+vtls.c
+warnless.c
+wildcard.c
+x509asn1.c
+Generating Code...
+Linking...
+   Creating library ..\..\..\..\build\Win32\VC6\DLL Release/libcurl.lib and object ..\..\..\..\build\Win32\VC6\DLL Release/libcurl.exp
+<h3>
+--------------------Configuration: curlsrc - Win32 DLL Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x409 /fo"..\..\..\..\build\Win32\VC6\DLL Release\src/curl.res" /i "..\..\..\..\include" /i "\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src" /d "NDEBUG" "C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\curl.rc"" 
+Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1E.tmp" with contents
+[
+/nologo /MD /W3 /O2 /I "C:\Program Files\Microsoft Platform SDK\Include" /I "..\..\..\..\include" /I "..\..\..\..\lib" /I "..\..\..\..\src" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /Fo"..\..\..\..\build\Win32\VC6\DLL Release\src/" /Fd"..\..\..\..\build\Win32\VC6\DLL Release\src/" /FD /EHsc /c 
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\nonblock.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\rawstr.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\strdup.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\strtoofft.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\lib\warnless.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_binmode.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_bname.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_cb_dbg.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_cb_hdr.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_cb_prg.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_cb_rea.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_cb_see.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_cb_wrt.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_cfgable.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_convert.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_dirhie.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_doswin.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_easysrc.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_formparse.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_getparam.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_getpass.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_help.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_helpers.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_homedir.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_hugehelp.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_libinfo.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_main.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_metalink.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_mfiles.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_msgs.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_operate.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_operhlp.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_panykey.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_paramhlp.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_parsecfg.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_setopt.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_sleep.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_urlglob.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_util.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_vms.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_writeenv.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_writeout.c"
+"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\src\tool_xattr.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1E.tmp" 
+Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1F.tmp" with contents
+[
+wldap32.lib ws2_32.lib libcurl.lib /nologo /subsystem:console /pdb:none /machine:I386 /out:"..\..\..\..\build\Win32\VC6\DLL Release\curl.exe" /libpath:"..\..\..\..\build\Win32\VC6\DLL Release" /fixed:no 
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\nonblock.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\rawstr.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\strdup.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\strtoofft.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\warnless.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_binmode.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_bname.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_cb_dbg.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_cb_hdr.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_cb_prg.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_cb_rea.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_cb_see.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_cb_wrt.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_cfgable.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_convert.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_dirhie.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_doswin.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_easysrc.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_formparse.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_getparam.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_getpass.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_help.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_helpers.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_homedir.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_hugehelp.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_libinfo.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_main.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_metalink.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_mfiles.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_msgs.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_operate.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_operhlp.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_panykey.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_paramhlp.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_parsecfg.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_setopt.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_sleep.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_urlglob.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_util.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_vms.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_writeenv.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_writeout.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\tool_xattr.obj"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\src\curl.res"
+"\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\curl-7.37\build\Win32\VC6\DLL Release\libcurl.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSP1F.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+nonblock.c
+rawstr.c
+strdup.c
+strtoofft.c
+warnless.c
+tool_binmode.c
+tool_bname.c
+tool_cb_dbg.c
+tool_cb_hdr.c
+tool_cb_prg.c
+tool_cb_rea.c
+tool_cb_see.c
+tool_cb_wrt.c
+tool_cfgable.c
+tool_convert.c
+tool_dirhie.c
+tool_doswin.c
+tool_easysrc.c
+tool_formparse.c
+tool_getparam.c
+Generating Code...
+Compiling...
+tool_getpass.c
+tool_help.c
+tool_helpers.c
+tool_homedir.c
+tool_hugehelp.c
+tool_libinfo.c
+tool_main.c
+tool_metalink.c
+tool_mfiles.c
+tool_msgs.c
+tool_operate.c
+tool_operhlp.c
+tool_panykey.c
+tool_paramhlp.c
+tool_parsecfg.c
+tool_setopt.c
+tool_sleep.c
+tool_urlglob.c
+tool_util.c
+tool_vms.c
+Generating Code...
+Compiling...
+tool_writeenv.c
+tool_writeout.c
+tool_xattr.c
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+curl.exe - 0 error(s), 3 warning(s)
+</pre>
+</body>
+</html>
