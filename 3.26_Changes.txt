@@ -2,6 +2,13 @@ Quake II v3.26
 
 Author: Michael Ole Olsen <gnu@gmx.net> and more
 
+3.26~rc2 Changes:
+- fixed sound volume too high in quake2 on lowest volume 
+  (was annoying for mp3 listening, quake2 sound was too loud in lowest setting)
+
+3.26-rc1 Changes:
+- added libcurl.dll so curl HTTP always works
+
 3.26 Changes:
 - http download support works now fully
 
