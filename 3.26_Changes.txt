@@ -6,6 +6,10 @@ Author: Michael Ole Olsen <gnu@gmx.net> and more
 - fixed sound volume too high in quake2 on lowest volume 
   (was annoying for mp3 listening, quake2 sound was too loud in lowest setting)
 
+  new icons in .exe file
+
+  disabled HTTP error reporting in console for simplicity
+
 3.26-rc1 Changes:
 - added libcurl.dll so curl HTTP always works
 

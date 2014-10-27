@@ -24,6 +24,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef USE_CURL
 #include "client.h"
 
+// show http errors in console?
+// other clients don't, it just adds up space
+// players may want to set it up in their client to show it
+// but if server supports HTTP it SHOULD have all files on http, else too bad...
+// so dont enable this!!
+// udp still works for udp servers without http enabled
+#define HTTP404ERROR 0
+
 extern void CL_SendCommand (void);
 char *httpdirfix(char *s);
 char *gdirfix(char *s);
@@ -356,8 +364,12 @@ int curlFetch(struct url *ptr, int dlnum)
 		{
 			//Com_Printf("[HTTP] %s [404 Not Found] [x remaining files]\n", 
 				//localfile, recvsize/1000,recvsize/(1000*totaltime),remainingFiles);
+
+			// dont show 404 error in some cases, prettier console...
+			#if HTTP404ERROR
 			Com_Printf("[HTTP] %s [404 Not Found]\n", 
 				localfile, recvsize/1000,recvsize/(1000*totaltime),remainingFiles);
+			#endif
 			got404=true;
 			cls.downloadnow=false; // dont download over http again...
 		}

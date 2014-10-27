@@ -6,13 +6,7 @@
 --------------------Configuration: quake2 - Win32 Release--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSPD2B.tmp" with contents
-[
-/nologo /G5 /MT /W4 /GX /Zd /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "USE_CURL" /Fp".\release/quake2.pch" /YX /Fo".\release/" /Fd".\release/" /FD /c 
-"C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c"
-]
-Creating command line "cl.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSPD2B.tmp" 
-Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSPD2C.tmp" with contents
+Creating temporary file "C:\DOCUME~1\mio\LOCALS~1\Temp\RSP107E.tmp" with contents
 [
 winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib win32/lib/workinglibcurl.lib /nologo /subsystem:windows /incremental:no /pdb:".\release/quake2.pdb" /machine:I386 /nodefaultlib:"MSVCRT" /out:".\release/quake2.exe" /NODEFAULTLIB:win32/lib/libcurl.lib 
 ".\release\cd_win.obj"
@@ -69,57 +63,14 @@ winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib win32/lib/workinglibcurl
 ".\release\gamex86.lib"
 ".\release\ref_gl.lib"
 ]
-Creating command line "link.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSPD2C.tmp"
+Creating command line "link.exe @C:\DOCUME~1\mio\LOCALS~1\Temp\RSP107E.tmp"
 <h3>Output Window</h3>
-Compiling...
-menu.c
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(513) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(518) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(523) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1036) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1041) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1046) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1051) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1056) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1061) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1066) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1108) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1116) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1121) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1126) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1131) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1136) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1146) : warning C4210: nonstandard extension used : function given file scope
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1141) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1161) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1900) : warning C4100: 'data' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1906) : warning C4100: 'data' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1912) : warning C4100: 'data' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1918) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1923) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1928) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(2261) : warning C4100: 'self' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(2266) : warning C4100: 'self' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(2290) : warning C4100: 'self' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(2385) : warning C4100: 'self' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(2392) : warning C4100: 'self' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(2429) : warning C4100: 'self' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(3380) : warning C4100: 'self' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(3385) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(3390) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(3396) : warning C4100: 'unused' : unreferenced formal parameter
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(3444) : warning C4210: nonstandard extension used : function given file scope
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(3762) : warning C4210: nonstandard extension used : function given file scope
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(3779) : warning C4189: 'maxframe' : local variable is initialized but not referenced
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(4010) : warning C4505: 'NoAltTabFunc' : unreferenced local function has been removed
-        C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(1066) : see declaration of 'NoAltTabFunc'
-C:\Documents and Settings\mio\My Documents\Quake II v.3.21 src\nofuzz-quake2\client\menu.c(3573) : warning C4715: 'PlayerConfig_ScanDirectories' : not all control paths return a value
 Linking...
 
 
 
 <h3>Results</h3>
-quake2.exe - 0 error(s), 40 warning(s)
+quake2.exe - 0 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

@@ -437,6 +437,7 @@ extern void *qwglGetProcAddress(char *symbol);
 
 extern void (*qgl3DfxSetPaletteEXT)(GLuint *);
 
+
 /*
 //FX Mesa Functions
 extern fxMesaContext (*qfxMesaCreateContext)(GLuint win, GrScreenResolution_t, GrScreenRefresh_t, const GLint attribList[]);

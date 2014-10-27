@@ -112,7 +112,9 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 	FILE *fp;
 	char name[MAX_OSPATH];
 	char buf[512];
+	int retval;
 
+	if (!filename) return true;
 	if (strstr (filename, ".."))
 	{
 		Com_Printf ("Refusing to download a path with ..\n");
@@ -123,38 +125,28 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 	{	// it exists, no need to download
 		return true;
 	}
-
+	
 	// we need to create both a ./gamedir and custom dirs below it
-	if (!filename) return true;
 	snprintf(buf,sizeof(buf),"%s/%s",FS_Gamedir(),filename);
 
 #ifdef USE_CURL
-	// if we fetched the file and renamed successfully dont try to dl again!
 	FS_CreatePath (buf);
 
 	dlqueue_add(filename);
 
 	if (cls.downloadnow)
 	{
+		// need to fix dlqueue being called all the time somehow
+		// how do we know when we have received all files to dl?
+		//it seems other clietns know it..
+		// there is no event sent after all msgs received is there?
 		//dlqueue_print();
-		if (curlFetch(cls.dlqueue,cls.dlqueue_files) == 0)
+		retval=curlFetch(cls.dlqueue,cls.dlqueue_files);
+		if (retval == 0 || retval==1)
 			return true;
 	}
 	else // wait to download..
 		return false;
-
-
-	//if (curlFetch(filename) == 0)
-	//	return true;
-
-	//above is only we need, r1q2 and aprq2 also only fetches moddir/players/male/... i.e.
-	// not just players/male/...
-	// the http server must be set up with a moddir/players/...
-
-	
-
-	//if (curlFetch(filename) == 0)
-		//return true;
 #endif
 
 	strcpy (cls.downloadname, filename);

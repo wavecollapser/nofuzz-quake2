@@ -2054,6 +2054,18 @@ SOURCE=.\win32\winquake.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 # Begin Source File
 
+SOURCE=.\win32\icon2.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\win32\icon3.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\win32\icon4.ico
+# End Source File
+# Begin Source File
+
 SOURCE=.\win32\q2.ico
 # End Source File
 # Begin Source File
