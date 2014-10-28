@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #ifdef USE_CURL
+//#pragma comment(lib, "curl-7.37/build/Win32/VC6/LIB Release - LIB OpenSSL/libcurl.lib") 
 #include "client.h"
 
 // show http errors in console?
@@ -369,9 +370,9 @@ int curlFetch(struct url *ptr, int dlnum)
 			#if HTTP404ERROR
 			Com_Printf("[HTTP] %s [404 Not Found]\n", 
 				localfile, recvsize/1000,recvsize/(1000*totaltime),remainingFiles);
+				got404=true;
+				cls.downloadnow=false; // dont download over http again...
 			#endif
-			got404=true;
-			cls.downloadnow=false; // dont download over http again...
 		}
 		else if (responseCode == 200)
 		{

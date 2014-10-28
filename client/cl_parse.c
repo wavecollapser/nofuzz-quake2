@@ -142,8 +142,9 @@ qboolean	CL_CheckOrDownloadFile (char *filename)
 		// there is no event sent after all msgs received is there?
 		//dlqueue_print();
 		retval=curlFetch(cls.dlqueue,cls.dlqueue_files);
-		if (retval == 0 || retval==1)
-			return true;
+		
+		cls.downloadnumber++;
+		return true;
 	}
 	else // wait to download..
 		return false;

@@ -20,7 +20,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // cl_main.c  -- client main loop
 
 #include "client.h"
-
+void dlqueue_p();
 cvar_t	*freelook;
 
 cvar_t	*adr0;
@@ -1609,6 +1609,8 @@ void CL_InitLocal (void)
 	Cmd_AddCommand ("weapnext", NULL);
 	Cmd_AddCommand ("weapprev", NULL);
 
+	Cmd_AddCommand ("dlq", dlqueue_p );
+
 
 	/* mio: only for debugging, use +set miodebug 1 to debug exe
 	it removes files so we can http download them and test http dl!
@@ -1793,7 +1795,7 @@ void CL_Frame (int msec)
 
 			if (cls.state == ca_connected) 
 			{
-				if (extratime < 200)
+				if (extratime < 400)
 				{
 
 #ifdef USE_CURL
@@ -1983,3 +1985,12 @@ void CL_Shutdown(void)
 }
 
 
+void dlqueue_p()
+{
+	//miodebug
+
+		dlqueue_print();
+		cls.downloadnow=1;
+
+		//curlFetch(cls.dlqueue,cls.dlqueue_files);
+}
